@@ -38,16 +38,16 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path='/login' element={<Login />} /> 
-        <Route path='/My_books' element={<My_books />} /> 
-        <Route path='/Profile' element={<Profile />} /> 
-        <Route path='/Book_details' element={<Book_details />} /> 
-        <Route path='/Group' element={<Group />} />
-        <Route path='/Quates' element={<Quates />} /> 
-        <Route path='/Author' element={<Author />} /> 
-        <Route path='/People' element={<People />} /> 
-        <Route path='/Contact_us' element={<Contact_us />} /> 
+        <Route path="/book-review/" element={<Home />} />
+        <Route path='/book-review/login' element={<Login />} /> 
+        <Route path='/book-review/My_books' element={<My_books />} /> 
+        <Route path='/book-review/Profile' element={<Profile />} /> 
+        <Route path='/book-review/Book_details' element={<Book_details />} /> 
+        <Route path='/book-review/Group' element={<Group />} />
+        <Route path='/book-review/Quates' element={<Quates />} /> 
+        <Route path='/book-review/Author' element={<Author />} /> 
+        <Route path='/book-review/People' element={<People />} /> 
+        <Route path='/book-review/Contact_us' element={<Contact_us />} /> 
 
 
 

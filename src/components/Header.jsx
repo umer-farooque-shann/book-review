@@ -30,29 +30,29 @@ const Header = () => {
     <header>
       <div className='header_align cr_space'>
         <div className='header_left'>  
-          <NavLink exact to="/" ><img src={Logo} className="logo" alt="logo" /></NavLink>
+          <NavLink exact to="/book-review/" ><img src={Logo} className="logo" alt="logo" /></NavLink>
         </div>
         <div className='header_right'>  
           <div className='header_nav'>
-            <NavLink exact to="/" activeClassName="active" onClick={closeSidebar}>Home</NavLink>
-            <NavLink to="/My_books" activeClassName="active" onClick={closeSidebar}>My Books</NavLink>
+            <NavLink exact to="/book-review/" activeClassName="active" onClick={closeSidebar}>Home</NavLink>
+            <NavLink to="/book-review/My_books" activeClassName="active" onClick={closeSidebar}>My Books</NavLink>
             <div className='dropdown'>
               <a className='dropdown-header'>Community</a>
               <div className='dropdown-options'>
-                <NavLink exact to="/Group"  className='option' onClick={closeSidebar}>Group</NavLink>
-                <NavLink exact to="/Quates"  className='option' onClick={closeSidebar}>Quotes</NavLink>
-                <NavLink exact to="/Author"  className='option' onClick={closeSidebar}>Ask the Author</NavLink>
-                <NavLink exact to="/People"  className='option' onClick={closeSidebar}>People</NavLink>
+                <NavLink exact to="/book-review/Group"  className='option' onClick={closeSidebar}>Group</NavLink>
+                <NavLink exact to="/book-review/Quates"  className='option' onClick={closeSidebar}>Quotes</NavLink>
+                <NavLink exact to="/book-review/Author"  className='option' onClick={closeSidebar}>Ask the Author</NavLink>
+                <NavLink exact to="/book-review/People"  className='option' onClick={closeSidebar}>People</NavLink>
               </div>
             </div>
-            <NavLink to="/Contact_us" activeClassName="active" onClick={closeSidebar}>Contact Us</NavLink>
+            <NavLink to="/book-review/Contact_us" activeClassName="active" onClick={closeSidebar}>Contact Us</NavLink>
           </div>
           {/* Conditionally render header_buttons */}
           {!isProfilePage && (
             <div  className='header_buttons'>
-              <NavLink to="/login" className='btn' activeClassName="active">Login</NavLink>
+              <NavLink to="/book-review/login" className='btn' activeClassName="active">Login</NavLink>
               <button className='btn sign_btn'>Sign up</button>
-              <NavLink to="/profile">
+              <NavLink to="/book-review/profile">
                 <img src={User1} className="profile-icon" alt="profile-icon" />
               </NavLink>
             </div>
