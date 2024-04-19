@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Header from '../components/Header'; 
 import { NavLink } from 'react-router-dom';
 
-import Logo from '../assets/logo.webp';
+import Logo from '../assets/logo21.png';
 
 
 import Edit from '../assets/edit.png';
