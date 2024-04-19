@@ -38,8 +38,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/book-review/home" element={<Home />} />
-        <Route path='/book-review/' element={<Login />} /> 
+        <Route path="/book-review/" element={<Home />} />
+        <Route path='/book-review/login' element={<Login />} /> 
         <Route path='/book-review/My_books' element={<My_books />} /> 
         <Route path='/book-review/Profile' element={<Profile />} /> 
         <Route path='/book-review/Book_details' element={<Book_details />} /> 
