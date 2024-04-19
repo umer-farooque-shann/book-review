@@ -1,34 +1,20 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer'; 
-
-
 import Search from '../assets/search.png';
 import Filter from '../assets/filter.png';
 import Banner1 from '../assets/banner1.png';
 import Banner2 from '../assets/banner2.png';
-
-
 import Google from '../assets/google.png';
 import Apple from '../assets/apple.png';
 import Instagram from '../assets/instagram.png';
 import Facebook from '../assets/facebook.png';
 import Twitter from '../assets/twitter.png';
-
 import User1 from '../assets/user1.png';
-
 import Sug1 from '../assets/sug1.png';
 import Sug2 from '../assets/sug2.png';
 import Sug3 from '../assets/sug3.png';
 import Sug4 from '../assets/sug4.png';
-
-
-
-
-
-
-
-
 
 const Home = () => {
   return (
