@@ -11,7 +11,7 @@ import Profile_img from '../assets/profile.png';
 import Gift from '../assets/gift.png';
 import Sug1 from '../assets/sug1.png';
 import Plus from '../assets/plus-circle.png';
-
+import Footer from '../components/Footer';
 import Statistics from '../assets/statistics.png';
 import Premium from '../assets/premium.png';
 
@@ -185,6 +185,7 @@ const Profile = () => {
           
         </div>
       </div>
+      <Footer/>
     </>
   )
 }

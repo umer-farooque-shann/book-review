@@ -54,7 +54,7 @@ const Footer = () => {
             </div>
           </div>
           <div className='footer-right'>
-              <NavLink exact to="/book-review/" ><img src={Logo} className="logo" alt="logo" /></NavLink>
+              <NavLink exact to="/book-review/home" ><img src={Logo} className="logo" alt="logo" /></NavLink>
               <div className='flex-align2 g3' style={{ flexWrap:'wrap' }}>
                 <img src={Appstore} className="store" alt="appstore" />
                 <img src={Playstore} className="store" alt="playestore" />

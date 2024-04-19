@@ -200,7 +200,7 @@ const Book_details = () => {
             <div className="books-row pt-4 pb-4">
               <h5 className='font-weight-500 pb-2'>More Edition</h5>
               <Slider {...sliderSettings}>
-                <NavLink to="/Book_details" className='slide-books'>
+                <NavLink to="/book-review/Book_details" className='slide-books'>
                   <img src={Sug1} className="books" alt="books" />
                   <div className='p-2'>
                     <h6 className='font-weight-400 text-dark'>eBook</h6>
@@ -209,7 +209,7 @@ const Book_details = () => {
 
                   </div>
                 </NavLink>
-                <NavLink to="/Book_details" className='slide-books'>
+                <NavLink to="/book-review/Book_details" className='slide-books'>
                   <img src={Sug2} className="books" alt="books" />
                   <div className='p-2'>
                     <h6 className='font-weight-400 text-dark'>eBook</h6>
@@ -218,7 +218,7 @@ const Book_details = () => {
 
                   </div>
                 </NavLink>
-                <NavLink to="/Book_details" className='slide-books'>
+                <NavLink to="/book-review/Book_details" className='slide-books'>
                   <img src={Sug3} className="books" alt="books" />
                   <div className='p-2'>
                     <h6 className='font-weight-400 text-dark'>eBook</h6>
@@ -227,7 +227,7 @@ const Book_details = () => {
 
                   </div>
                 </NavLink>
-                <NavLink to="/Book_details" className='slide-books'>
+                <NavLink to="/book-review/Book_details" className='slide-books'>
                   <img src={Sug4} className="books" alt="books" />
                   <div className='p-2'>
                     <h6 className='font-weight-400 text-dark'>eBook</h6>
@@ -236,7 +236,7 @@ const Book_details = () => {
 
                   </div>
                 </NavLink>
-                <NavLink to="/Book_details" className='slide-books'>
+                <NavLink to="/book-review/Book_details" className='slide-books'>
                   <img src={Sug1} className="books" alt="books" />
                   <div className='p-2'>
                     <h6 className='font-weight-400 text-dark'>eBook</h6>
@@ -245,7 +245,7 @@ const Book_details = () => {
 
                   </div>
                 </NavLink>
-                <NavLink to="/Book_details" className='slide-books'>
+                <NavLink to="/book-review/Book_details" className='slide-books'>
                   <img src={Sug2} className="books" alt="books" />
                   <div className='p-2'>
                     <h6 className='font-weight-400 text-dark'>eBook</h6>
@@ -254,7 +254,7 @@ const Book_details = () => {
 
                   </div>
                 </NavLink>
-                <NavLink to="/Book_details" className='slide-books'>
+                <NavLink to="/book-review/Book_details" className='slide-books'>
                   <img src={Sug3} className="books" alt="books" />
                   <div className='p-2'>
                     <h6 className='font-weight-400 text-dark'>eBook</h6>
@@ -263,7 +263,7 @@ const Book_details = () => {
 
                   </div>
                 </NavLink>
-                <NavLink to="/Book_details" className='slide-books'>
+                <NavLink to="/book-review/Book_details" className='slide-books'>
                   <img src={Sug4} className="books" alt="books" />
                   <div className='p-2'>
                     <h6 className='font-weight-400 text-dark'>eBook</h6>

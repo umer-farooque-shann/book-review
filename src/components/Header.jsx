@@ -30,11 +30,11 @@ const Header = () => {
     <header>
       <div className='header_align cr_space'>
         <div className='header_left'>  
-          <NavLink exact to="/book-review/" ><img src={Logo} className="logo" alt="logo" /></NavLink>
+          <NavLink exact to="/book-review/home" ><img src={Logo} className="logo" alt="logo" /></NavLink>
         </div>
         <div className='header_right'>  
           <div className='header_nav'>
-            <NavLink exact to="/book-review/" activeClassName="active" onClick={closeSidebar}>Home</NavLink>
+            <NavLink exact to="/book-review/home" activeClassName="active" onClick={closeSidebar}>Home</NavLink>
             <NavLink to="/book-review/My_books" activeClassName="active" onClick={closeSidebar}>My Books</NavLink>
             <div className='dropdown'>
               <a className='dropdown-header'>Community</a>

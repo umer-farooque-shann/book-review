@@ -4,7 +4,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Header from '../components/Header'; 
 import { NavLink, useLocation } from 'react-router-dom';
-
+import Footer from '../components/Footer';
 
 import Search from '../assets/search.png';
 import Plus from '../assets/plus-circle.png';
@@ -172,6 +172,7 @@ const My_books = () => {
          
         </div>
       </div>
+      <Footer/>
     </>
   )
 }

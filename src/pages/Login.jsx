@@ -1,18 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
 import Logo from '../assets/logo.png';
 import Account from '../assets/account.png';
 import Password from '../assets/password.png';
 import Eye from '../assets/eye.png';
-
 import Google from '../assets/google.png';
 import Apple from '../assets/apple.png';
 import Facebook from '../assets/facebook.png';
 import Twitter from '../assets/twitter.png';
-
-
-
 
 const Login = () => {
   return (
@@ -61,7 +56,7 @@ const Login = () => {
       </div>
 
     </div>
-      
+    
     </>
   )
 }

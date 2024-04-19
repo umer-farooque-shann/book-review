@@ -5,7 +5,7 @@ import Mail from '../assets/mail.png';
 import Account from '../assets/account.png';
 import Password from '../assets/password.png';
 import Eye from '../assets/eye.png';
-
+import Footer from '../components/Footer';
 
 
 const Contact = () => {
@@ -86,6 +86,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

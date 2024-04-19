@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import Plus from '../assets/plus-circle.png';
 import User1 from '../assets/user1.png';
+import Footer from '../components/Footer';
 
 const Quates = () => {
   const [activeTab, setActiveTab] = useState('popular');
@@ -552,6 +553,7 @@ const Quates = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

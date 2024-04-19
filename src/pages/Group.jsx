@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Plus from '../assets/plus-circle.png';
 import Group2 from '../assets/group.png';
+import Footer from '../components/Footer';
 
 
 const Group = () => {
@@ -196,6 +197,7 @@ const Group = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
