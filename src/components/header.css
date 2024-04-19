@@ -18,10 +18,11 @@ header {
   justify-content: space-between;
   gap: 10px;
   height: 80px;
+  transition: .3s;
 
 }
 .header_align .logo{
-  width: 200px;
+  height: 65px;
   display: flex;
 }
 .header_right{

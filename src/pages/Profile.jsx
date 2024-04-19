@@ -1,11 +1,9 @@
 import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+
 import Header from '../components/Header'; 
 import { NavLink } from 'react-router-dom';
 
-import Logo from '../assets/logo21.png';
+import Logo from '../assets/logo.png';
 
 
 import Edit from '../assets/edit.png';

@@ -1,5 +1,7 @@
 import React from 'react';
-import Header from '../components/Header'; 
+import Header from '../components/Header';
+import Footer from '../components/Footer'; 
+
 
 import Search from '../assets/search.png';
 import Filter from '../assets/filter.png';
@@ -230,6 +232,7 @@ const Home = () => {
 
         </div>
       </div>
+      <Footer />
     </>
   )
 }

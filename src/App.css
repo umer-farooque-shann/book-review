@@ -1037,6 +1037,9 @@ button.slick-arrow.slick-disabled {
   padding: 5px 15px;
   border-radius: 10px;
   height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .status-dep{
   display: flex;
@@ -1199,6 +1202,8 @@ button.slick-arrow.slick-disabled {
   max-width: 1000px;
   padding: 40px 60px;
   position: relative;
+  max-height: 94vh;
+  overflow: auto;
   
 
 }
@@ -1653,7 +1658,7 @@ display: none;
   flex-direction: column;
   padding-top: 80px;
 }
-.dropdown-options {
+header .dropdown-options {
   position: relative;
   top: auto;
   background-color: initial;
@@ -1691,6 +1696,13 @@ display: none;
 }
 .people-page .tab-head{
   margin-bottom: 30px;
+}
+.footer_row {
+  flex-direction: column-reverse;
+  gap: 40px;
+}
+.footer-left, .footer-right{
+  width: 100%;
 }
 }
   @media(max-width: 767px){
@@ -1855,7 +1867,39 @@ button.btn {
 .contact-page::after{
   display: none;
 }
+.review-modal .card-main {
+  padding: 20px;
+  margin: 10px;
+
+}
+.review-modal .flex-align2{
+  flex-direction: column;
+}
+.modal_close {
+
+  right: 10px;
+  top: 10px;
+
+}
+.slick-next {
+  right: 15px;
+}
+.slick-prev {
+  left: 15px;
+}
+header {
+
+  box-shadow: 0 0 8px 2px #cdd5ba;
+  background:#e4efc9;
   }
+  .scrolled .header_align {
+
+    height: 65px;
+}
+.footer-left {
+  gap: 10px;
+}
+}
   @media(max-width: 540px){
     .search {
 
@@ -1884,7 +1928,7 @@ button.btn {
 
 }
 .header_align .logo {
-  width: 150px;
+  height: 55px;
   
 }
 .header_right-login a {
@@ -1943,6 +1987,28 @@ button.btn {
 .group-card-right .flex-align3 {
 
   justify-content: center;
+}
+.footer-left{
+  gap: 30px;
+}
+.footer-col{
+  width: 100%;
+  text-align: center;
+}
+.store{
+  height: 40px;
+}
+.col-250 {
+  padding: 10px 0px;
+}
+footer {
+
+  margin-top: 30px;
+
+}
+footer .login-social {
+
+  width: 100% !important;
 }
     }
     @media(max-width: 400px){

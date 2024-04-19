@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import Logo from '../assets/logo21.png';
+import Logo from '../assets/logo.png';
 import Account from '../assets/account.png';
 import Password from '../assets/password.png';
 import Eye from '../assets/eye.png';
@@ -20,7 +20,7 @@ const Login = () => {
       <header>
         <div className='header_align cr_space'>
             <div className='header_left'>  
-                <NavLink exact to="/book-review/" ><img src={Logo} className="logo" alt="logo" /></NavLink>
+                <NavLink exact to="/" ><img src={Logo} className="logo" alt="logo" /></NavLink>
             </div>
             <div className='header_right-login'>  
                 <a>New User? <span>Sign Up </span></a>

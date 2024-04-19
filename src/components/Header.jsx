@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import '../components/header.css';
-import Logo from '../assets/logo21.png';
+import Logo from '../assets/logo.png';
 import User1 from '../assets/user1.png';
 
 const Header = () => {
@@ -50,8 +50,8 @@ const Header = () => {
           {/* Conditionally render header_buttons */}
           {!isProfilePage && (
             <div  className='header_buttons'>
-              <NavLink to="/book-review/login" className='btn' activeClassName="active">Login</NavLink>
-              <button className='btn sign_btn'>Sign up</button>
+              {/* <NavLink to="/book-review/login" className='btn' activeClassName="active">Login</NavLink>
+              <button className='btn sign_btn'>Sign up</button> */}
               <NavLink to="/book-review/profile">
                 <img src={User1} className="profile-icon" alt="profile-icon" />
               </NavLink>

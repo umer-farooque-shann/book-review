@@ -48,12 +48,6 @@ function App() {
         <Route path='/book-review/Author' element={<Author />} /> 
         <Route path='/book-review/People' element={<People />} /> 
         <Route path='/book-review/Contact_us' element={<Contact_us />} /> 
-
-
-
-
-
-
       </Routes>
     </BrowserRouter>
   );
