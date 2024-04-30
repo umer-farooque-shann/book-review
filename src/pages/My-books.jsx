@@ -5,22 +5,12 @@ import 'slick-carousel/slick/slick-theme.css';
 import Header from '../components/Header'; 
 import { NavLink, useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
-
 import Search from '../assets/search.png';
 import Plus from '../assets/plus-circle.png';
-
-
 import Sug1 from '../assets/sug1.png';
 import Sug2 from '../assets/sug2.png';
 import Sug3 from '../assets/sug3.png';
 import Sug4 from '../assets/sug4.png';
-
-
-
-
-
-
-
 
 
 const My_books = () => {

@@ -189,9 +189,6 @@ const Group = () => {
                 <div className='secondary-badge'>Tag9</div>
                 <div className='secondary-badge'>Tag7</div>
                 <div className='secondary-badge'>Tag9</div>
-    
-
-
               </div>
             </div>
           </div>

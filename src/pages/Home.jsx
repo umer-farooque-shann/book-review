@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '../services/axiosInterceptor';
+import { Link } from "react-router-dom"
 import Header from '../components/Header';
-import Footer from '../components/Footer'; 
+import Footer from '../components/Footer';
 import Search from '../assets/search.png';
 import Filter from '../assets/filter.png';
 import Banner1 from '../assets/banner1.png';
@@ -11,23 +13,48 @@ import Instagram from '../assets/instagram.png';
 import Facebook from '../assets/facebook.png';
 import Twitter from '../assets/twitter.png';
 import User1 from '../assets/user1.png';
-import Sug1 from '../assets/sug1.png';
-import Sug2 from '../assets/sug2.png';
-import Sug3 from '../assets/sug3.png';
-import Sug4 from '../assets/sug4.png';
+import Spinner from '../components/Spinner';
+
 
 const Home = () => {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await axiosInstance.get('/api/book/v1/book');
+        setBooks(response.data.books);
+        console.log(response.data.books);
+        setLoading(false);
+      } catch (error) {
+        setError(error.response ? error.response.data.message : 'An error occurred');
+        setLoading(false);
+      }
+    };
+
+    fetchBooks();
+  }, []);
+
+  if (loading) {
+    return <div><Spinner/></div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
   return (
     <>
       <Header />
       <div className='main'>
         <div className='search'>
-           <img src={Search} className="search-img" alt="search" />
-           <input placeholder='Search Your Books' />
-           <img src={Filter} className="filter-img" alt="filter" />
+          <img src={Search} className="search-img" alt="search" />
+          <input placeholder='Search Your Books' />
+          <img src={Filter} className="filter-img" alt="filter" />
         </div>
         <div className='home-row cr_space'>
-          
+
           <div className='col-250'>
             <div className='card-main'>
               <div>
@@ -80,9 +107,9 @@ const Home = () => {
             </div>
             <div className='grid-container pt-2'>
               <div className='grid-card grid-card1 '>
-              <div className='mob-flex'>
+                <div className='mob-flex'>
                   <img src={User1} className="user" alt="user" />
-                    <div>
+                  <div>
                     <h4>BOOK NAME</h4>
                     <h5>Author Name</h5>
                     <h5>Lorem</h5>
@@ -95,7 +122,7 @@ const Home = () => {
               <div className='grid-card grid-card2 '>
                 <div className='flex-align2 g4'>
                   <img src={User1} className="user" alt="user" />
-                    <div>
+                  <div>
                     <h4>BOOK NAME</h4>
                     <h5>Author Name</h5>
                     <h5>Lorem</h5>
@@ -108,7 +135,7 @@ const Home = () => {
               <div className='grid-card grid-card3 '>
                 <div className='flex-align2 g2'>
                   <img src={User1} className="user" alt="user" />
-                    <div>
+                  <div>
                     <h4>BOOK NAME</h4>
                     <h5>Author Name</h5>
                     <h5>Lorem</h5>
@@ -121,11 +148,11 @@ const Home = () => {
               <div className='grid-card grid-card4 '>
                 <div className='flex-align2 g2'>
                   <img src={User1} className="user" alt="user" />
-                    <div>
-                      <h4>BOOK NAME</h4>
-                      <h5>Author Name</h5>
-                      <h5>Lorem</h5>
-                    </div>
+                  <div>
+                    <h4>BOOK NAME</h4>
+                    <h5>Author Name</h5>
+                    <h5>Lorem</h5>
+                  </div>
                 </div>
                 <div className='Stars stars-2' style={{ '--rating': '4' }}></div>
 
@@ -134,7 +161,7 @@ const Home = () => {
               <div className='grid-card grid-card5 '>
                 <div className='flex-align2 g2'>
                   <img src={User1} className="user" alt="user" />
-                    <div>
+                  <div>
                     <h4>BOOK NAME</h4>
                     <h5>Author Name</h5>
                     <h5>Lorem</h5>
@@ -147,45 +174,33 @@ const Home = () => {
               <div className='grid-card grid-card6 '>
                 <div className='flex-align2 g2'>
                   <img src={User1} className="user" alt="user" />
-                    <div>
+                  <div>
                     <h4>BOOK NAME</h4>
                     <h5>Author Name</h5>
                     <h5>Lorem</h5>
                   </div>
                 </div>
                 <div className='Stars stars-2' style={{ '--rating': '4' }}></div>
-
-
               </div>
-             
-
             </div>
             <div className="suggestion-row">
               <div className='head'>
                 <h4>Suggestions </h4>
               </div>
               <div className='row-4'>
-                <div className='col-3'>
-                  <img src={Sug1} className="suggestion" alt="suggestion" />
-
-                  
-                </div>
-                <div className='col-3'>
-                  <img src={Sug2} className="suggestion" alt="suggestion" />
-
-                  
-                </div>
-                <div className='col-3'>
-                  <img src={Sug3} className="suggestion" alt="suggestion" />
-
-                  
-                </div>
-                <div className='col-3'>
-                  <img src={Sug4} className="suggestion" alt="suggestion" />
-
-                  
-                </div>
-
+                {books.length === 0 ? (
+                  <div>No books found.</div>
+                ) : (
+                  books.map((book) => (
+                    <div className='col-3' key={book._id}>
+                      {book.image && (
+                        <Link to={`/book-review/Book_details/${book.slug}`}>
+                          <img src={`http://localhost:7000/${book.image}`} className="suggestion" alt={book.title} />
+                        </Link>
+                      )}
+                    </div>
+                  ))
+                )}
               </div>
             </div>
 
@@ -208,11 +223,7 @@ const Home = () => {
                 <p>Advertise</p>
                 <p>Authors & Ads Blog</p>
                 <p>API</p>
-
               </div>
-              
-    
-
             </div>
           </div>
 

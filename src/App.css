@@ -20,8 +20,6 @@
   --fifth: #A4C0ED;
   --white: #fff;
   --black: #000;
-
-
 }
 
 body, html {
@@ -1261,6 +1259,19 @@ button.slick-arrow.slick-disabled {
   color: #FFB800;
   cursor: pointer;
 }
+.star {
+  color: #90A0A3;
+  /* Add any other common styles for stars here */
+}
+
+.star.filled:before {
+  color: #FFB800; /* Yellow color for filled stars */
+}
+
+.star.empty:before {
+  color: #90A0A3; /* Default color for empty stars */
+}
+
 
 
 /* book details end */

@@ -1,7 +1,7 @@
-// footer.js
+// Footer.js
 
 import React from 'react';
-import { NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import '../components/footer.css';
 import Logo from '../assets/logo.png';
 import Google from '../assets/google.png';
@@ -14,7 +14,7 @@ import Playstore from '../assets/playstore.png';
 const Footer = () => {
   return (
     <footer>
-      <div className=' cr_space'>
+      <div className='cr_space'>
         <div className='footer_row'>
           <div className='footer-left'>
             <div className='footer-col'>
@@ -30,7 +30,7 @@ const Footer = () => {
               </ul>
             </div>
             <div className='footer-col'>
-              <h5 className='font-weight-600 text-secondary mb-3'>work with us</h5>
+              <h5 className='font-weight-600 text-secondary mb-3'>Work with us</h5>
               <ul className='footer-ul'>
                 <li>Authors</li>
                 <li>Advertise</li>
@@ -39,31 +39,29 @@ const Footer = () => {
               </ul>
             </div>
             <div className='footer-col'>
-              <h5 className='font-weight-600 text-secondary mb-4'>contact</h5>
-              <div className='social login-social fit-content' style={{ padding:'0' }}>
-                  <img src={Google} className="social-img" alt="social-img" />
-                  <img src={Apple} className="social-img" alt="social-img" />
-                  <img src={Facebook} className="social-img" alt="social-img" />
-                  <img src={Twitter} className="social-img" alt="social-img" />
+              <h5 className='font-weight-600 text-secondary mb-4'>Contact</h5>
+              <div className='social login-social fit-content' style={{ padding: '0' }}>
+                <img src={Google} className="social-img" alt="social-img" />
+                <img src={Apple} className="social-img" alt="social-img" />
+                <img src={Facebook} className="social-img" alt="social-img" />
+                <img src={Twitter} className="social-img" alt="social-img" />
               </div>
-              <h5 className='font-weight-600 text-secondary mt-4 mb-3 pt-2'>support</h5>
+              <h5 className='font-weight-600 text-secondary mt-4 mb-3 pt-2'>Support</h5>
               <ul className='footer-ul'>
                 <li>FAQ</li>
-                <li>Search Guide </li>
+                <li>Search Guide</li>
               </ul>
             </div>
           </div>
           <div className='footer-right'>
-              <NavLink exact to="/book-review/home" ><img src={Logo} className="logo" alt="logo" /></NavLink>
-              <div className='flex-align2 g3' style={{ flexWrap:'wrap' }}>
-                <img src={Appstore} className="store" alt="appstore" />
-                <img src={Playstore} className="store" alt="playestore" />
-              </div>
+            <NavLink exact to="/book-review/home"><img src={Logo} className="logo" alt="logo" /></NavLink>
+            <div className='flex-align2 g3' style={{ flexWrap: 'wrap' }}>
+              <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer"><img src={Appstore} className="store" alt="appstore" /></a>
+              <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer"><img src={Playstore} className="store" alt="playestore" /></a>
+            </div>
           </div>
         </div>
         <h6 className='text-center cr_space font-weight-400 pt-4'>Copyright © YYYY - YYYY Company name. All rights reserved</h6>
-    
-      
       </div>
     </footer>
   );

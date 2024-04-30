@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axiosInstance from './axiosInterceptor';
 
 const AuthService = {
-  login: async (username, password) => {
+  login: async (email, password) => {
     try {
-      const response = await axios.post('/api/login', { username, password });
+      const response = await axiosInstance.post('/api/auth/login', { email, password });
       const { accessToken, refreshToken } = response.data;
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
@@ -30,7 +30,7 @@ const AuthService = {
   refreshToken: async () => {
     try {
       const refreshToken = localStorage.getItem('refreshToken');
-      const response = await axios.post('/api/refresh-token', { refreshToken });
+      const response = await axiosInstance.post('/api/auth/refresh-token', { refreshToken });
       const newAccessToken = response.data.accessToken;
       localStorage.setItem('accessToken', newAccessToken);
       return newAccessToken;

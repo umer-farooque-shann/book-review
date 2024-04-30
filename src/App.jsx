@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
@@ -10,13 +9,9 @@ import Quates from './pages/Quates';
 import Author from './pages/Author';
 import People from './pages/People';
 import Contact_us from './pages/Contact';
-
-
 import Login from './pages/Login';
-
-
-
 import './App.css';
+import Admin from './pages/Admin';
 
 function App() {
   useEffect(() => {
@@ -38,11 +33,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/book-review/" element={<Home />} />
-        <Route path='/book-review/login' element={<Login />} /> 
+        <Route path="/book-review/home" element={<Home />} />
+        <Route path='/book-review/admin' element={<Admin/>} />
+        <Route path='/book-review/' element={<Login />} /> 
         <Route path='/book-review/My_books' element={<My_books />} /> 
         <Route path='/book-review/Profile' element={<Profile />} /> 
-        <Route path='/book-review/Book_details' element={<Book_details />} /> 
+        <Route path='/book-review/Book_details/:slug' element={<Book_details />} /> 
         <Route path='/book-review/Group' element={<Group />} />
         <Route path='/book-review/Quates' element={<Quates />} /> 
         <Route path='/book-review/Author' element={<Author />} /> 
