@@ -1,50 +1,65 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Header from '../components/Header'; 
+import Header from '../components/Header';
 import { NavLink, useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Search from '../assets/search.png';
 import Plus from '../assets/plus-circle.png';
 import Sug1 from '../assets/sug1.png';
-import Sug2 from '../assets/sug2.png';
-import Sug3 from '../assets/sug3.png';
-import Sug4 from '../assets/sug4.png';
+import axiosInstance from '../services/axiosInterceptor';
 
 
 const My_books = () => {
+
+  const [userBooks, setUserBooks] = useState([]);
+
+  useEffect(() => {
+    const fetchUserBooks = async () => {
+      try {
+        const response = await axiosInstance.get('/api/book/get-user-book');
+        setUserBooks(response.data.books);
+        console.log(response.data.books); // Add this line to check the fetched books
+      } catch (error) {
+        console.error('Error fetching user books:', error);
+      }
+    };
+  
+    fetchUserBooks();
+  }, []);
+  
 
   const sliderSettings = {
     dots: false,
     infinite: false,
     speed: 500,
     slidesToScroll: 1,
-    rtl: false 
+    rtl: false
   };
   if (window.innerWidth < 768) {
     sliderSettings.slidesToShow = 2.5;
-  }else if (window.innerWidth < 990) {
+  } else if (window.innerWidth < 990) {
     sliderSettings.slidesToShow = 3.5;
   } else if (window.innerWidth < 1200) {
     sliderSettings.slidesToShow = 5;
   } else {
     sliderSettings.slidesToShow = 6;
   }
-  
-  
+
+
   return (
     <>
       <Header />
       <div className='main'>
-        
+
         <div className='book-row cr_space'>
-          <div className='head2 text-center' style={{ marginBottom:'20px' }}>
-              <h2 className='text-secondary'>My Books</h2>
-              <div className='search right-search'>
-                <img src={Search} className="search-img" alt="search" />
-                <input placeholder='Search Your Books' />
-              </div>
+          <div className='head2 text-center' style={{ marginBottom: '20px' }}>
+            <h2 className='text-secondary'>My Books</h2>
+            <div className='search right-search'>
+              <img src={Search} className="search-img" alt="search" />
+              <input placeholder='Search Your Books' />
+            </div>
 
           </div>
           <div className='col-280'>
@@ -70,11 +85,11 @@ const My_books = () => {
                   <p>(0)</p>
                 </div>
               </div>
-              <div className='flex-align3 g2' style={{ flexWrap:'nowrap' }}>
-                <button className='btn' style={{ boxShadow: 'none', width:'100%', fontWeight:'400', color:'var(--black)' }}>All Self</button>
-                <button button className='btn' style={{ boxShadow: 'none', background:'var(--secondary)', color:'var(--white)', fontWeight:'300' }}>Add</button>
+              <div className='flex-align3 g2' style={{ flexWrap: 'nowrap' }}>
+                <button className='btn' style={{ boxShadow: 'none', width: '100%', fontWeight: '400', color: 'var(--black)' }}>All Self</button>
+                <button button className='btn' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300' }}>Add</button>
               </div>
-              <hr/>
+              <hr />
               <div>
                 <h6>Reading Activities</h6>
               </div>
@@ -86,7 +101,7 @@ const My_books = () => {
                 <p>Your Reading Stats</p>
                 <p>Your Reading Stats</p>
               </div>
-              <hr/>
+              <hr />
               <div>
                 <h6>Tools</h6>
               </div>
@@ -102,67 +117,35 @@ const My_books = () => {
             </div>
           </div>
           <div className='col-280-f'>
-            <div className='head' style={{ paddingLeft:'10px' }}>
+            <div className='head' style={{ paddingLeft: '10px' }}>
               <h6 className='text-secondary'>Added Books</h6>
 
             </div>
-            
+
             <div className="books-row">
               <Slider {...sliderSettings}>
-                <NavLink to="/book-review/Book_details" className='slide-books'>
-                  <img src={Sug1} className="books" alt="books" />
-                </NavLink>
-                <NavLink to="/book-review/Book_details" className='slide-books'>
-                  <img src={Sug2} className="books" alt="books" />
-                </NavLink>
-                <NavLink to="/book-review/Book_details" className='slide-books'>
-                  <img src={Sug3} className="books" alt="books" />
-                </NavLink>
-                <NavLink to="/book-review/Book_details" className='slide-books'>
-                  <img src={Sug4} className="books" alt="books" />
-                </NavLink>
-                <NavLink to="/book-review/Book_details" className='slide-books'>
-                  <img src={Sug1} className="books" alt="books" />
-                </NavLink>
-                <NavLink to="/book-review/Book_details" className='slide-books'>
-                  <img src={Sug2} className="books" alt="books" />
-                </NavLink>
-                <NavLink to="/book-review/Book_details" className='slide-books'>
-                  <img src={Sug1} className="books" alt="books" />
-                </NavLink>
-                <NavLink to="/book-review/Book_details" className='slide-books'>
-                  <img src={Sug2} className="books" alt="books" />
-                </NavLink>
-                <NavLink to="/book-review/Book_details" className='slide-books'>
-                  <img src={Sug3} className="books" alt="books" />
-                </NavLink>
-                <NavLink to="/book-review/Book_details" className='slide-books'>
-                  <img src={Sug4} className="books" alt="books" />
-                </NavLink>
-                <NavLink to="/book-review/Book_details" className='slide-books'>
-                  <img src={Sug1} className="books" alt="books" />
-                </NavLink>
-                <NavLink to="/book-review/Book_details" className='slide-books'>
-                  <img src={Sug2} className="books" alt="books" />
-                </NavLink>
-               
+                {userBooks.map((book, index) => (
+                  <NavLink key={index} to={`/book-review/Book_details/${book.slug}`} className='slide-books'>
+                    <img src={`http://localhost:7000/${book.image}`} className="books" alt={book.title} />
+                  </NavLink>
+                ))}
               </Slider>
             </div>
             <div className="books-row">
-                <div className='slide-books slide-books2'>
-                  <div className='add-book-card'>
-                    <img src={Sug1} className="books" alt="books" />
-                    <img src={Plus} className="plus-img" alt="search" />
-                  </div>
-                  <h6 className='text-center text-secondary' style={{ fontWeight:'500' }}>Add Your Books</h6>
+              <div className='slide-books slide-books2'>
+                <div className='add-book-card'>
+                  <img src={Sug1} className="books" alt="books" />
+                  <img src={Plus} className="plus-img" alt="search" />
                 </div>
+                <h6 className='text-center text-secondary' style={{ fontWeight: '500' }}>Add Your Books</h6>
+              </div>
             </div>
 
           </div>
-         
+
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   )
 }

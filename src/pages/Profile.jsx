@@ -15,6 +15,7 @@ import axiosInstance from '../services/axiosInterceptor';
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
+  const [bookCounts, setBookCounts] = useState({ read: 0, currentlyReading: 0, wantToRead: 0 });
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -27,6 +28,21 @@ const Profile = () => {
     };
 
     fetchUserProfile();
+  }, []);
+  useEffect(() => {
+    // Fetch user details including book counts from the backend
+    const fetchUserDetails = async () => {
+      try {
+        // Make a GET request to fetch user details from the backend
+        const response = await axiosInstance.get('/api/book/get-user-book-count'); 
+        console.log(response.data);// Updated endpoint
+        setBookCounts(response.data.bookCounts);
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
+    };
+
+    fetchUserDetails();
   }, []);
 
   if (error) {
@@ -42,6 +58,11 @@ const Profile = () => {
     month: 'short',
     day: 'numeric'
   });
+
+
+  
+
+   
   return (
     <>
       <Header />
@@ -99,22 +120,23 @@ const Profile = () => {
                       <p className='font-weight-500'>Favorite </p>
                       <p className='text-secondary font-weight-500'>GENRES</p>
                     </div>
-                    <p >Romance, Mystery/Thriller, Fantasy, Science Fiction, +5 More</p>
+                    <p>{userData.preferredGenres.join(', ')}</p>
+                    {/* <p >Romance, Mystery/Thriller, Fantasy, Science Fiction, +5 More</p> */}
                   </div>
                   <div className='pt-3'>
                     <h6>My BookShelves</h6>
                     <div className='card-3-row pt-2'>
                       <div className='col-4-card' style={{ background: 'var(--secondary)' }}>
                         <h6 className='text-white'>Read</h6>
-                        <p className='text-white'>(01)</p>
+                        <p className='text-white'>({bookCounts.read})</p>
                       </div>
                       <div className='col-4-card' style={{ background: 'var(--secondary)' }}>
                         <h6 className='text-white'>Currently Reading</h6>
-                        <p className='text-white'>(01)</p>
+                        <p className='text-white'>({bookCounts.currentlyReading})</p>
                       </div>
                       <div className='col-4-card' style={{ background: 'var(--secondary)' }}>
                         <h6 className='text-white'>To Read</h6>
-                        <p className='text-white'>(01)</p>
+                        <p className='text-white'>({bookCounts.wantToRead})</p>
                       </div>
 
 

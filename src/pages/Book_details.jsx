@@ -28,6 +28,7 @@ const Book_details = () => {
   const [recommendations, setRecommendations] = useState([]);
   const [averageRating, setAverageRating] = useState(null);
   const [usersCount, setUsersCount] = useState(null);
+  const [dropdownText, setDropdownText] = useState('Currently Reading');
 
   useEffect(() => {
     const fetchBookBySlug = async () => {
@@ -43,6 +44,30 @@ const Book_details = () => {
 
     fetchBookBySlug();
   }, [slug]);
+
+  const handleWantToRead = async () => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.userId;
+
+      // Send a request to add the book to the user's collection
+      const response = await axiosInstance.post('/api/book/add-book-to-user', {
+        userId: userId,
+        bookId: book._id // Assuming book._id exists in your book object
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        console.log('Book added to collection');
+        // Optionally, you can update the UI to reflect that the book has been added to the user's collection
+      } else {
+        console.error('Failed to add book to collection');
+      }
+    } catch (error) {
+      console.error('Error adding book to collection:', error);
+    }
+  };
+
 
   const handleRatingChange = async (value) => {
     try {
@@ -83,7 +108,7 @@ const Book_details = () => {
 
     fetchRating(); // Call the fetchRating function
   }, [slug]);
-  
+
 
   useEffect(() => {
     const fetchAverageRating = async () => {
@@ -125,6 +150,15 @@ const Book_details = () => {
     sliderSettings.slidesToShow = 6;
   }
 
+  const handleDropdownClick = async (listType) => {
+    try {
+      const response = await axiosInstance.post(`/api/book/${listType}/${book.slug}`);
+      setDropdownText(response.data.message);
+    } catch (error) {
+      console.error(error);
+      // Handle error if necessary
+    }
+  };
   return (
     <>
       <Header />
@@ -143,19 +177,21 @@ const Book_details = () => {
                   <img src={`http://localhost:7000/${book.image}`} className="book-dertail-img" alt="books" />
                 </div>
                 <div className='details-dropdown'>
-                  <div className='details-dropdown-left'>
-                    Currently Reading
-                  </div>
-                  <div className='details-dropdown-right'>
-                    <img src={Arrow_down} className="arrow-down" alt="arrow-down" />
-                  </div>
-                  <div className='details-dropdown-content'>
-                    <a>Currently Reading</a>
-                    <a>Currently Reading</a>
-                    <a>Currently Reading</a>
-                  </div>
+                <div className='details-dropdown-left'>
+                  {dropdownText}
                 </div>
-                <button className='btn mt-3' activeClassName="active" style={{ borderRadius: '40px', width: '100%', }}>Want to Read</button>
+                <div className='details-dropdown-right'>
+                  <img src={Arrow_down} className="arrow-down" alt="arrow-down" />
+                </div>
+                <div className='details-dropdown-content'>
+                  <ul style={{ listStyle: "none", width: "100% !important", textAlign: "center", cursor: "pointer" }}>
+                    <li onClick={() => handleDropdownClick('read')}><a>Read</a></li>
+                    <li onClick={() => handleDropdownClick('currentlyReading')}><a>Currently Reading</a></li>
+                    <li onClick={() => handleDropdownClick('wantToRead')}><a>Want to read</a></li>
+                  </ul>
+                </div>
+              </div>
+                <button className='btn mt-3' activeClassName="active" style={{ borderRadius: '40px', width: '100%', }} onClick={handleWantToRead}>Want to Read</button>
                 {/* <div className='Stars star-lg  pt-4 pb-2' style={{ '--rating': '0', justifyContent:'center' }}></div> */}
                 <div className="rating2 pb-2">
                   {[5, 4, 3, 2, 1].map((ratingValue) => (
@@ -174,7 +210,7 @@ const Book_details = () => {
                         title={getTitle(ratingValue)}
                         aria-hidden="true"
                       >
-                       
+
                       </label>
                     </React.Fragment>
                   ))}

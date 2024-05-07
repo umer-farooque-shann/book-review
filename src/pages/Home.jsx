@@ -24,9 +24,8 @@ const Home = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axiosInstance.get('/api/book/v1/book');
-        setBooks(response.data.books);
-        console.log(response.data.books);
+        const response = await axiosInstance.get('/api/book/book-recommendation');
+        setBooks(response.data);
         setLoading(false);
       } catch (error) {
         setError(error.response ? error.response.data.message : 'An error occurred');

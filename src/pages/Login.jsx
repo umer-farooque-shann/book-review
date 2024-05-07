@@ -22,7 +22,7 @@ const Login = () => {
             if (data.isAdmin) {
                 navigate("/book-review/admin");
             } else {
-                navigate("/book-review/home");
+                navigate("/book-review/Intrest");
             }
         } catch (error) {
             console.error('Login failed:', error);

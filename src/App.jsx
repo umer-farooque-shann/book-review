@@ -12,6 +12,7 @@ import Contact_us from './pages/Contact';
 import Login from './pages/Login';
 import './App.css';
 import Admin from './pages/Admin';
+import Intrest from './pages/Intrest';
 
 function App() {
   useEffect(() => {
@@ -44,6 +45,7 @@ function App() {
         <Route path='/book-review/Author' element={<Author />} /> 
         <Route path='/book-review/People' element={<People />} /> 
         <Route path='/book-review/Contact_us' element={<Contact_us />} /> 
+        <Route path='/book-review/Intrest' element={<Intrest />} /> 
       </Routes>
     </BrowserRouter>
   );

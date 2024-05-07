@@ -1013,6 +1013,8 @@ button.slick-arrow.slick-disabled {
   padding: 15px;
   border-radius: 20px;
   display: none;
+  width: 100%;
+  z-index: 10;
 }
 .details-dropdown:hover .details-dropdown-content{
   display: block;
@@ -1537,6 +1539,56 @@ button.slick-arrow.slick-disabled {
 
 }
 /* contact end */
+/* genre */
+.genre-main{
+  background-color: #d4d3c3;
+  padding: 5px;
+  border-radius: 5px; 
+  display: flex;
+  align-items: center; 
+  gap: 5px;
+}
+.genre-form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: calc(100% - 250px);
+  margin: 0 auto;
+}
+.genre-btn{
+  background-color: #cdd5ba;
+  border: none;
+  padding: 10px 20px;
+}
+
+/* genre end */
+/* admin */
+.admin-form{
+  background-color: var(--primar);
+  padding: 10px;
+  width: fit-content;
+
+}
+.admin-form input{
+  background-color: inherit;
+  border: 0.5px solid #8b8989;
+  padding:5px 30px;
+  border-radius: 5px;
+}
+.admin-form textarea{
+  width: 100%;
+  height: 10rem;
+  background-color: inherit;
+}
+.admin-btn{
+  background-color: inherit;
+  border: none;
+  cursor: grab;
+}
+
+/* admin end */
 @media(min-width: 1700px){
   .cr_space{
   
