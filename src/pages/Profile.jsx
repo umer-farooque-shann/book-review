@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
-import { NavLink } from 'react-router-dom';
+import { NavLink,useNavigate } from 'react-router-dom';
 import Logo from '../assets/logo.png';
 import Edit from '../assets/edit.png';
 import Profile_img from '../assets/profile.png';
@@ -11,11 +11,13 @@ import Footer from '../components/Footer';
 import Statistics from '../assets/statistics.png';
 import Premium from '../assets/premium.png';
 import axiosInstance from '../services/axiosInterceptor';
+import AuthService from '../services/AuthService';
 
-const Profile = () => {
+const Profile = ({setIsLoggedIn}) => {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
   const [bookCounts, setBookCounts] = useState({ read: 0, currentlyReading: 0, wantToRead: 0 });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -44,6 +46,28 @@ const Profile = () => {
 
     fetchUserDetails();
   }, []);
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await axiosInstance.get('/api/book/get-user-book-count');
+        setBookCounts(response.data.bookCounts);
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      localStorage.clear()
+      setIsLoggedIn(false);
+      navigate('/book-review/');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -58,9 +82,6 @@ const Profile = () => {
     month: 'short',
     day: 'numeric'
   });
-
-
-  
 
    
   return (
@@ -215,8 +236,8 @@ const Profile = () => {
             </div>
           </div>
           <div className='col-2-row max-w--1200 pt-4 pb-4'>
-            <NavLink to="/login">
-              <button className='btn' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', float: 'right' }}>
+            <NavLink >
+              <button className='btn' onClick={handleLogout} style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', float: 'right' }}>
                 Logout
               </button>
             </NavLink>

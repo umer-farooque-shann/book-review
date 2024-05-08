@@ -14,7 +14,6 @@ const Author = () => {
           <div className='head2 text-center' style={{ marginBottom: '20px' }}>
             <h2 className='text-secondary'>Ask The Author</h2>
           </div>
-          
           <div className='col-3-row mt-4 max-w--1400'>
             <h6 className='w-100 p-2'>Featured Groups</h6>
             <div className='col-4-cr'>

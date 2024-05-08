@@ -54,7 +54,9 @@ const Intrest = () => {
     ];
     const navigate = useNavigate();
 
-    const handleSubmit = async (selectedGenres) => {
+    const handleSubmit = async (selectedGenres, e) => {
+        
+        
         try {
             // Make a PUT request to your backend endpoint
             await axiosInstance.put('/api/auth/preferredGenres', { genres: selectedGenres });

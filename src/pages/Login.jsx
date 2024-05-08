@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink,useNavigate } from 'react-router-dom';
+import { NavLink,useNavigate,Link } from 'react-router-dom';
 import Logo from '../assets/logo.png';
 import Account from '../assets/account.png';
 import Password from '../assets/password.png';
@@ -10,7 +10,7 @@ import Facebook from '../assets/facebook.png';
 import Twitter from '../assets/twitter.png';
 import AuthService from '../services/AuthService';
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
     const [email, setEmail] = useState(''); 
     const [password, setPassword] = useState('');
     const navigate = useNavigate()
@@ -19,10 +19,15 @@ const Login = () => {
         e.preventDefault();
         try {
             const data = await AuthService.login(email, password); 
+            setIsLoggedIn(true); // Set user as logged in
             if (data.isAdmin) {
                 navigate("/book-review/admin");
             } else {
-                navigate("/book-review/Intrest");
+                if (data.isFirstTimeLogin) {
+                    navigate("/book-review/Intrest");
+                } else {
+                    navigate("/book-review/home"); // Redirect to home page after login
+                }
             }
         } catch (error) {
             console.error('Login failed:', error);
@@ -38,7 +43,7 @@ const Login = () => {
                         <NavLink to="/" ><img src={Logo} className="logo" alt="logo" /></NavLink>
                     </div>
                     <div className='header_right-login'>
-                        <a>New User? <span>Sign Up </span></a>
+                        <Link to="/book-review/signup" style={{textDecoration:"none"}}>New User? <span>Sign Up </span></Link>
                     </div>
                 </div>
             </header>
