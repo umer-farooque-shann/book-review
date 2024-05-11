@@ -62,8 +62,9 @@ const Profile = ({setIsLoggedIn}) => {
   const handleLogout = async () => {
     try {
       localStorage.clear()
-      setIsLoggedIn(false);
       navigate('/book-review/');
+      setIsLoggedIn(false);
+     
     } catch (error) {
       console.error('Logout failed:', error);
     }
