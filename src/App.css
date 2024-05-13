@@ -1584,11 +1584,84 @@ button.slick-arrow.slick-disabled {
 }
 .admin-btn{
   background-color: inherit;
+  border: 1px solid #8b8989;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 24px;
+}
+.book-new{
+  font-size: 1.5rem;
+  color: var(--secondary);
+}
+.count-data{
+  border: 1px solid #8b8989;
+  border-radius: 5px;
+  height: 10rem;
+  width: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.count-data  p{
+  font-size: 70px;
+  color:  var(--secondary);
+}
+.count-data  p span{
+  font-size:20px;
+}
+.count-wrap{
+  display: flex;
+  gap: 10px;
+}
+.admin-req{
+display: flex;
+gap: 10px;
+width: calc(100% - 30%);
+flex-wrap: wrap;
+margin: 0 auto;
+max-width: 950px;
+
+}
+.admin-req-main{
+  border: solid 1px #636262;
+  width: 20rem;
+  padding: 10px;
+  
+
+}
+.rm-btn{
+  background-color: inherit;
   border: none;
-  cursor: grab;
+  color: red;
+  cursor: pointer;
+}
+.rm-btn:hover{
+  filter:drop-shadow(5px 5px  #7c7c7c) ;
 }
 
 /* admin end */
+
+.test-request{
+  width: auto;
+  height: 15rem;
+}
+.req-btn{
+  background-color: var(--secondary);
+  color: var(--white);
+  border: none;
+  padding: 5px;
+}
+.req-main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
 @media(min-width: 1700px){
   .cr_space{
   

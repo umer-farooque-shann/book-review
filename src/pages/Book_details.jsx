@@ -177,20 +177,20 @@ const Book_details = () => {
                   <img src={`http://localhost:7000/${book.image}`} className="book-dertail-img" alt="books" />
                 </div>
                 <div className='details-dropdown'>
-                <div className='details-dropdown-left'>
-                  {dropdownText}
+                  <div className='details-dropdown-left'>
+                    {dropdownText}
+                  </div>
+                  <div className='details-dropdown-right'>
+                    <img src={Arrow_down} className="arrow-down" alt="arrow-down" />
+                  </div>
+                  <div className='details-dropdown-content'>
+                    <ul style={{ listStyle: "none", width: "100% !important", textAlign: "center", cursor: "pointer" }}>
+                      <li onClick={() => handleDropdownClick('read')}><a>Read</a></li>
+                      <li onClick={() => handleDropdownClick('currentlyReading')}><a>Currently Reading</a></li>
+                      <li onClick={() => handleDropdownClick('wantToRead')}><a>Want to read</a></li>
+                    </ul>
+                  </div>
                 </div>
-                <div className='details-dropdown-right'>
-                  <img src={Arrow_down} className="arrow-down" alt="arrow-down" />
-                </div>
-                <div className='details-dropdown-content'>
-                  <ul style={{ listStyle: "none", width: "100% !important", textAlign: "center", cursor: "pointer" }}>
-                    <li onClick={() => handleDropdownClick('read')}><a>Read</a></li>
-                    <li onClick={() => handleDropdownClick('currentlyReading')}><a>Currently Reading</a></li>
-                    <li onClick={() => handleDropdownClick('wantToRead')}><a>Want to read</a></li>
-                  </ul>
-                </div>
-              </div>
                 <button className='btn mt-3' activeClassName="active" style={{ borderRadius: '40px', width: '100%', }} onClick={handleWantToRead}>Want to Read</button>
                 {/* <div className='Stars star-lg  pt-4 pb-2' style={{ '--rating': '0', justifyContent:'center' }}></div> */}
                 <div className="rating2 pb-2">
@@ -445,6 +445,8 @@ const Book_details = () => {
                 <p>Displaying 1 - 10 of 68 reviews</p>
 
               </div>
+
+              {/* This is comment place */}
               <div className='author-card pt-4 mb-4'>
                 <div className='review-card-left d-flex g2'>
                   <div className='text-center'>
@@ -481,199 +483,10 @@ const Book_details = () => {
                           <img src={Comment_icon} className="arrow-down" alt="arrow-down" />
                           Comment
                         </h6>
-
-
                       </div>
                     </div>
-
                   </div>
-
                 </div>
-
-              </div>
-              <div className='author-card pt-4 mb-4'>
-                <div className='review-card-left d-flex g2'>
-                  <div className='text-center'>
-                    <div className='flex-align2 g4 mb-2'>
-                      <img src={User2} className="w-100-px" alt="user" />
-                      <div className='text-left'>
-                        <h5 className='font-weight-500 mb-1'>User Name</h5>
-                        <p className='text-gray'>0,000 Reviews</p>
-                        <p className='text-gray'>102 Followers</p>
-                      </div>
-                    </div>
-                    <div className='Stars' style={{ '--rating': 4 }}></div>
-                    <button button className='btn mt-2' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', borderRadius: '40px' }}>
-                      Follow
-                    </button>
-                  </div>
-
-                </div>
-                <div className='review-card-right'>
-                  <div className='autor-card-head'>
-                    <div>
-                      <h6 className='text-gray font-weight-500 pb-4'>Month DD, YYYY</h6>
-                      <h6 className='font-weight-400 mb-2'>ipsum ex sapien Lorem varius libero, placerat Cras nec dui Donec In ex felis, volutpat sit amet, varius tincidunt non tortor. elit. Morbi turpis venenatis dui </h6>
-                      <h6 className='font-weight-400 mb-2'>Ut commodo elit adipiscing hendrerit non non elementum id id cursus non odio vel tincidunt quam at, ac sit Nam at, malesuada non placerat Nunc urna ex. eget </h6>
-                      <h6 className='font-weight-400 mb-2'>Nullam tincidunt lorem. ipsum Donec fringilla Vestibulum sit consectetur Nam dui. hendrerit vitae turpis lorem. Quisque placerat ex. Cras massa ex ex nisl. ex </h6>
-
-                      <div className='flex-align3 g4 pt-1'>
-                        <h6 className='font-weight-400 text-gray'>54 Likes</h6>
-                        <h6 className='font-weight-400 flex-align3 g1'>
-                          <img src={Like} className="arrow-down" alt="arrow-down" />
-                          Like
-                        </h6>
-                        <h6 className='font-weight-400 flex-align3 g1'>
-                          <img src={Comment_icon} className="arrow-down" alt="arrow-down" />
-                          Comment
-                        </h6>
-
-
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-              <div className='author-card pt-4 mb-4'>
-                <div className='review-card-left d-flex g2'>
-                  <div className='text-center'>
-                    <div className='flex-align2 g4 mb-2'>
-                      <img src={User2} className="w-100-px" alt="user" />
-                      <div className='text-left'>
-                        <h5 className='font-weight-500 mb-1'>User Name</h5>
-                        <p className='text-gray'>0,000 Reviews</p>
-                        <p className='text-gray'>102 Followers</p>
-                      </div>
-                    </div>
-                    <div className='Stars' style={{ '--rating': 4 }}></div>
-                    <button button className='btn mt-2' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', borderRadius: '40px' }}>
-                      Follow
-                    </button>
-                  </div>
-
-                </div>
-                <div className='review-card-right'>
-                  <div className='autor-card-head'>
-                    <div>
-                      <h6 className='text-gray font-weight-500 pb-4'>Month DD, YYYY</h6>
-                      <h6 className='font-weight-400 mb-2'>ipsum ex sapien Lorem varius libero, placerat Cras nec dui Donec In ex felis, volutpat sit amet, varius tincidunt non tortor. elit. Morbi turpis venenatis dui </h6>
-                      <h6 className='font-weight-400 mb-2'>Ut commodo elit adipiscing hendrerit non non elementum id id cursus non odio vel tincidunt quam at, ac sit Nam at, malesuada non placerat Nunc urna ex. eget </h6>
-                      <h6 className='font-weight-400 mb-2'>Nullam tincidunt lorem. ipsum Donec fringilla Vestibulum sit consectetur Nam dui. hendrerit vitae turpis lorem. Quisque placerat ex. Cras massa ex ex nisl. ex </h6>
-
-                      <div className='flex-align3 g4 pt-1'>
-                        <h6 className='font-weight-400 text-gray'>54 Likes</h6>
-                        <h6 className='font-weight-400 flex-align3 g1'>
-                          <img src={Like} className="arrow-down" alt="arrow-down" />
-                          Like
-                        </h6>
-                        <h6 className='font-weight-400 flex-align3 g1'>
-                          <img src={Comment_icon} className="arrow-down" alt="arrow-down" />
-                          Comment
-                        </h6>
-
-
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-              <div className='author-card pt-4 mb-4'>
-                <div className='review-card-left d-flex g2'>
-                  <div className='text-center'>
-                    <div className='flex-align2 g4 mb-2'>
-                      <img src={User2} className="w-100-px" alt="user" />
-                      <div className='text-left'>
-                        <h5 className='font-weight-500 mb-1'>User Name</h5>
-                        <p className='text-gray'>0,000 Reviews</p>
-                        <p className='text-gray'>102 Followers</p>
-                      </div>
-                    </div>
-                    <div className='Stars' style={{ '--rating': 4 }}></div>
-                    <button button className='btn mt-2' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', borderRadius: '40px' }}>
-                      Follow
-                    </button>
-                  </div>
-
-                </div>
-                <div className='review-card-right'>
-                  <div className='autor-card-head'>
-                    <div>
-                      <h6 className='text-gray font-weight-500 pb-4'>Month DD, YYYY</h6>
-                      <h6 className='font-weight-400 mb-2'>ipsum ex sapien Lorem varius libero, placerat Cras nec dui Donec In ex felis, volutpat sit amet, varius tincidunt non tortor. elit. Morbi turpis venenatis dui </h6>
-                      <h6 className='font-weight-400 mb-2'>Ut commodo elit adipiscing hendrerit non non elementum id id cursus non odio vel tincidunt quam at, ac sit Nam at, malesuada non placerat Nunc urna ex. eget </h6>
-                      <h6 className='font-weight-400 mb-2'>Nullam tincidunt lorem. ipsum Donec fringilla Vestibulum sit consectetur Nam dui. hendrerit vitae turpis lorem. Quisque placerat ex. Cras massa ex ex nisl. ex </h6>
-
-                      <div className='flex-align3 g4 pt-1'>
-                        <h6 className='font-weight-400 text-gray'>54 Likes</h6>
-                        <h6 className='font-weight-400 flex-align3 g1'>
-                          <img src={Like} className="arrow-down" alt="arrow-down" />
-                          Like
-                        </h6>
-                        <h6 className='font-weight-400 flex-align3 g1'>
-                          <img src={Comment_icon} className="arrow-down" alt="arrow-down" />
-                          Comment
-                        </h6>
-
-
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-              <div className='author-card pt-4 mb-4'>
-                <div className='review-card-left d-flex g2'>
-                  <div className='text-center'>
-                    <div className='flex-align2 g4 mb-2'>
-                      <img src={User2} className="w-100-px" alt="user" />
-                      <div className='text-left'>
-                        <h5 className='font-weight-500 mb-1'>User Name</h5>
-                        <p className='text-gray'>0,000 Reviews</p>
-                        <p className='text-gray'>102 Followers</p>
-                      </div>
-                    </div>
-                    <div className='Stars' style={{ '--rating': 4 }}></div>
-                    <button button className='btn mt-2' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', borderRadius: '40px' }}>
-                      Follow
-                    </button>
-                  </div>
-
-                </div>
-                <div className='review-card-right'>
-                  <div className='autor-card-head'>
-                    <div>
-                      <h6 className='text-gray font-weight-500 pb-4'>Month DD, YYYY</h6>
-                      <h6 className='font-weight-400 mb-2'>ipsum ex sapien Lorem varius libero, placerat Cras nec dui Donec In ex felis, volutpat sit amet, varius tincidunt non tortor. elit. Morbi turpis venenatis dui </h6>
-                      <h6 className='font-weight-400 mb-2'>Ut commodo elit adipiscing hendrerit non non elementum id id cursus non odio vel tincidunt quam at, ac sit Nam at, malesuada non placerat Nunc urna ex. eget </h6>
-                      <h6 className='font-weight-400 mb-2'>Nullam tincidunt lorem. ipsum Donec fringilla Vestibulum sit consectetur Nam dui. hendrerit vitae turpis lorem. Quisque placerat ex. Cras massa ex ex nisl. ex </h6>
-
-                      <div className='flex-align3 g4 pt-1'>
-                        <h6 className='font-weight-400 text-gray'>54 Likes</h6>
-                        <h6 className='font-weight-400 flex-align3 g1'>
-                          <img src={Like} className="arrow-down" alt="arrow-down" />
-                          Like
-                        </h6>
-                        <h6 className='font-weight-400 flex-align3 g1'>
-                          <img src={Comment_icon} className="arrow-down" alt="arrow-down" />
-                          Comment
-                        </h6>
-
-
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-
               </div>
               <div className='w-100 pt-4'>
                 <button button className='btn mx-auto' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', borderRadius: '40px' }}>

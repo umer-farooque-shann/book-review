@@ -31,6 +31,7 @@ const Login = ({ setIsLoggedIn }) => {
             }
         } catch (error) {
             console.error('Login failed:', error);
+            alert("Invalid Credntials")
             // Handle login failure, show error message or perform any other action
         }
     };

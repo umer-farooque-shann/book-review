@@ -20,6 +20,8 @@ const Home = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -36,21 +38,36 @@ const Home = () => {
     fetchBooks();
   }, []);
 
+  const handleSearch = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/book/books/search?term=${searchTerm}`);
+      setSearchResults(response.data);
+    } catch (error) {
+      console.error(error);
+      setError('Error searching books');
+    }
+  };
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   if (loading) {
-    return <div><Spinner/></div>;
+    return <div><Spinner /></div>;
   }
 
   if (error) {
     return <div>Error: {error}</div>;
   }
+
   return (
     <>
       <Header />
       <div className='main'>
         <div className='search'>
-          <img src={Search} className="search-img" alt="search" />
-          <input placeholder='Search Your Books' />
-          <img src={Filter} className="filter-img" alt="filter" />
+          <img src={Search} className="search-img" alt="search" onClick={handleSearch} />
+          <input placeholder='Search Your Books' value={searchTerm} onChange={handleChange} />
+          <img src={Filter} className="filter-img" alt="filter" onClick={handleSearch} />
         </div>
         <div className='home-row cr_space'>
 
@@ -100,7 +117,33 @@ const Home = () => {
             </div>
           </div>
           <div className='col-250-f'>
-            <div className='head text-center'>
+          
+           
+              {searchResults.length > 0 ? (
+                <div className='col-250-f'>
+                  <div className='head text-center'>
+                    <h4>Search Results</h4>
+                  </div>
+                  <div className='grid-container pt-2'>
+                    {searchResults.map((books) => (
+                     <div className='col-3' key={books._id}>
+                     {books.image && (
+                       <Link to={`/book-review/Book_details/${books.slug}`}>
+                        
+                        <img src={`http://localhost:7000/${books.image}`} className="suggestion" alt={books.title} style={{height:'10rem',width:"6rem",borderRadius:"5px"}}/>
+                        
+
+                       
+                        
+                       </Link>
+                     )}
+                   </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div>
+                    <div className='head text-center'>
               <h4>Trending Books</h4>
 
             </div>
@@ -202,16 +245,18 @@ const Home = () => {
                 )}
               </div>
             </div>
-
+                </div>
+              )}
+            
           </div>
           <div className='col-250'>
             <div className='card-main'>
               <div>
-                <h6>WELCOME TO LOGO NAME</h6>
+                <h6>WELCOME TO OPEN BOOK</h6>
                 <p className='pt-1'>Meet your favorite book, find your reading community, and manage your reading life.</p>
               </div>
               <div className='banner-container'>
-                <h4>LOGO NAME</h4>
+                <h4>OPEN BOOK</h4>
                 <img src={Banner2} className="banner" alt="banner" />
                 <p>Announcing the Best Books of 2024</p>
 

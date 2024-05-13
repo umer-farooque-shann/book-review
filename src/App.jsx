@@ -13,34 +13,33 @@ import Login from './pages/Login';
 import Admin from './pages/Admin';
 import Intrest from './pages/Intrest';
 import Signup from './pages/Signup';
+import RequestPage from './pages/RequestPage';
 import './App.css';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFirstTimeLogin, setIsFirstTimeLogin] = useState(true);
-  console.log(isLoggedIn);
+  const [isAdmin, setIsAdmin] = useState(false);
+
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     const firstTimeLogin = localStorage.getItem('isFirstTimeLogin');
+    const admin = localStorage.getItem('isAdmin');
 
     if (token) {
       setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
     }
 
     if (firstTimeLogin === 'false') {
       setIsFirstTimeLogin(false);
-    } else {
-      setIsFirstTimeLogin(true);
+    }
+
+    if (admin === 'true') {
+      setIsAdmin(true);
     }
   }, []);
 
-  // Function to handle logout
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem('accessToken'); // Remove access token from local storage
-  };
+
 
   // Protected Route Component
   const PrivateRoute = ({ element, path }) => {
@@ -49,7 +48,12 @@ const App = () => {
 
   // Interest Route Component
   const InterestRoute = ({ element, path }) => {
-    return isFirstTimeLogin ? element : <Navigate to="/book-review/home" />;
+    return isFirstTimeLogin ? element : <Navigate to="/book-review/" />;
+  };
+
+  // Admin Route Component
+  const AdminRoute = ({ element, path }) => {
+    return isAdmin ? element : <Navigate to="/book-review/admin" />;
   };
 
   return (
@@ -57,19 +61,19 @@ const App = () => {
       <Routes>
         <Route path='/book-review/signup' element={<Signup />} />
         <Route path='/book-review/' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path='/book-review/admin' element={<PrivateRoute element={<Admin />} />} />
+        <Route path='/book-review/admin' element={<AdminRoute element={<Admin />} />} />
         <Route path='/book-review/home' element={<PrivateRoute element={<Home />} />} />
         <Route path='/book-review/my_books' element={<PrivateRoute element={<My_books />} />} />
         <Route path='/book-review/profile' element={<PrivateRoute element={<Profile setIsLoggedIn={setIsLoggedIn}/>} />} />
         <Route path='/book-review/book_details/:slug' element={<PrivateRoute element={<Book_details />} />} />
         <Route path='/book-review/group' element={<PrivateRoute element={<Group />} />} />
-        <Route path='/book-review/quotes' element={<PrivateRoute element={<Quates />} />} />
+        <Route path='/book-review/quates' element={<PrivateRoute element={<Quates />} />} />
         <Route path='/book-review/author' element={<PrivateRoute element={<Author />} />} />
         <Route path='/book-review/people' element={<PrivateRoute element={<People />} />} />
         <Route path='/book-review/contact_us' element={<PrivateRoute element={<Contact_us />} />} />
         <Route path='/book-review/intrest' element={<InterestRoute element={<Intrest />} />} />
+        <Route path='/book-review/request' element={<PrivateRoute element={<RequestPage />} />} />
       </Routes>
-  
     </Router>
   );
 };

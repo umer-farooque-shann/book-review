@@ -32,12 +32,12 @@ const Profile = ({setIsLoggedIn}) => {
     fetchUserProfile();
   }, []);
   useEffect(() => {
-    // Fetch user details including book counts from the backend
+
     const fetchUserDetails = async () => {
       try {
-        // Make a GET request to fetch user details from the backend
+
         const response = await axiosInstance.get('/api/book/get-user-book-count'); 
-        console.log(response.data);// Updated endpoint
+     
         setBookCounts(response.data.bookCounts);
       } catch (error) {
         console.error('Error fetching user details:', error);
@@ -84,7 +84,9 @@ const Profile = ({setIsLoggedIn}) => {
     day: 'numeric'
   });
 
-   
+   const handlClick = () =>{
+    navigate("/book-review/request")
+   }
   return (
     <>
       <Header />
@@ -93,8 +95,8 @@ const Profile = ({setIsLoggedIn}) => {
           <div className='head2 text-center' style={{ marginBottom: '20px' }}>
             <h2 className='text-secondary'>Profile</h2>
             <div className='right-search'>
-              <button button className='btn' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', borderRadius: '40px' }}>
-                Edit Profile
+              <button onClick={handlClick} className='btn' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', borderRadius: '40px' }}>
+              Request To Librarian
                 <img src={Edit} className="edit-img" alt="edit" style={{ marginLeft: '15px' }} />
 
               </button>
@@ -237,7 +239,7 @@ const Profile = ({setIsLoggedIn}) => {
             </div>
           </div>
           <div className='col-2-row max-w--1200 pt-4 pb-4'>
-            <NavLink >
+            <NavLink to="/book-review/">
               <button className='btn' onClick={handleLogout} style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', float: 'right' }}>
                 Logout
               </button>
@@ -246,6 +248,7 @@ const Profile = ({setIsLoggedIn}) => {
 
         </div>
       </div>
+      
       <Footer />
     </>
   )

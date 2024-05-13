@@ -31,6 +31,7 @@ const Signup = () => {
             navigate("/book-review/");
         } catch (error) {
             console.error('Signup failed:', error);
+            alert("Something Went Wrong")
             // Handle signup failure, show error message or perform any other action
         }
     };
