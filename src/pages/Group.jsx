@@ -1,18 +1,59 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Plus from '../assets/plus-circle.png';
 import Group2 from '../assets/group.png';
 import Footer from '../components/Footer';
+import { Link } from "react-router-dom"
+import axiosInstance from '../services/axiosInterceptor';
 
 
 const Group = () => {
+
+
+
+  const [userGroups, setUserGroups] = useState([]);
+
+  useEffect(() => {
+    axiosInstance.get('/api/room/groups')
+      .then(response => {
+        setUserGroups(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching user groups:', error);
+      });
+  }, []);
+
+
+
+  const [showCreateClubInput, setShowCreateClubInput] = useState(false);
+  const [newClubName, setNewClubName] = useState('');
+
+  const handleCreateClubClick = () => {
+    setShowCreateClubInput(true);
+  };
+
+  const handleInputChange = (e) => {
+    setNewClubName(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axiosInstance.post('/api/room/create', { name: newClubName });
+      console.log('New Club Created:', response.data);
+      setShowCreateClubInput(false);
+      // Optionally, you can add logic to handle the success response here
+    } catch (error) {
+      console.error('Error creating club:', error);
+      // Optionally, you can add logic to handle the error here
+    }
+  };
   return (
     <>
       <Header />
       <div className='main Group-page'>
         <div className='book-row cr_space pb-4'>
           <div className='head2 text-center' style={{ marginBottom: '20px' }}>
-            <h2 className='text-secondary'>Groups</h2>
+            <h2 className='text-secondary'>Virtual Book Club</h2>
             <div className='right-search'>
               <button
                 className='btn'
@@ -23,8 +64,9 @@ const Group = () => {
                   fontWeight: '300',
                   borderRadius: '40px',
                 }}
+                onClick={handleCreateClubClick}
               >
-                Create Group
+                Create Club
                 <img
                   src={Plus}
                   className='circle-img'
@@ -33,6 +75,34 @@ const Group = () => {
                 />
               </button>
             </div>
+            {showCreateClubInput && (
+              <div className='create-club-input' style={{ marginTop: '20px' }}>
+                <input
+                  type='text'
+                  placeholder='Enter Club Name'
+                  value={newClubName}
+                  onChange={handleInputChange}
+                  style={{
+                    marginRight: '10px',
+                    padding: '10px',
+                    borderRadius: '5px',
+                    border: '1px solid var(--secondary)',
+                  }}
+                />
+                <button
+                  className='btn'
+                  onClick={handleSubmit}
+                  style={{
+                    background: 'var(--secondary)',
+                    color: 'var(--white)',
+                    fontWeight: '300',
+                    borderRadius: '40px',
+                  }}
+                >
+                  Submit
+                </button>
+              </div>
+            )}
           </div>
           <div
             className='flex-align3 g3 w-100 d-flex pt-4 mt-4 pb-4 mb-4'
@@ -40,7 +110,7 @@ const Group = () => {
           >
             <div className='search bottom-shadow' style={{ margin: '0' }}>
               <input
-                placeholder='Group Name,  Book Name, Author Name'
+                placeholder='Club Name'
                 style={{ textAlign: 'left' }}
               />
             </div>
@@ -59,86 +129,39 @@ const Group = () => {
           </div>
           <div className='col-400-f'>
             <div>
-              <h6>Featured Groups</h6>
-              <div className='card-main mt-4'>
-                <div className='group-card-row'>
-                  <div className='group-card-left'>
-                    <img
-                        src={Group2}
-                        className='group-img'
-                        alt='Group'
-                      />
-                  </div>
-                  <div className='group-card-right'>
-                    <h5 className='font-weight-500'>Group Name (Official or Unofficial)</h5>
-                    <div className='flex-align3 g2 pt-1 pb-3'>
-                      <span>234234 Members</span>
-                      <span>Active  an 02 hours ago</span>
+              {userGroups.map((group) => (
+                <div className='card-main mt-4' key={group._id}>
+                  <Link
+                    to={`/book-review/club/${group._id}`}
+                    style={{ textDecoration: 'none', color: '#111' }}
+                  >
+                    <div
+                      className='group-card-row'
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <div className='group-card-left'>
+                        <img
+                          src={Group2}
+                          className='group-img'
+                          alt='Group'
+                        />
+                      </div>
+
+                      <div className='group-card-right'>
+                        <h5 className='font-weight-500'>{group.name}</h5>
+                        <p>
+                          amet, Cras nisi at Nullam elit. tincidunt hendrerit
+                          at, Ut vitae Donec viverra elit ullamcorper libero,
+                          vitae ex. ipsum facilisis odio Donec Lorem ex Donec In
+                          amet, Cras nisi at Nullam elit. tincidunt hendrerit
+                          at, Ut vitae Donec viverra elit ullamcorper libero,
+                          vitae ex. ipsum facilisis odio Donec Lorem ex Donec In
+                        </p>
+                      </div>
                     </div>
-                    <p >amet, Cras nisi at Nullam elit. tincidunt hendrerit at, Ut vitae Donec viverra elit ullamcorper libero, vitae ex. ipsum facilisis odio Donec Lorem ex Donec In amet, Cras nisi at Nullam elit. tincidunt hendrerit at, Ut vitae Donec viverra elit ullamcorper libero, vitae ex. ipsum facilisis odio Donec Lorem ex Donec In </p>
-                  </div>
+                  </Link>
                 </div>
-              </div>
-            </div>
-            <div className='pt-4 mt-4'>
-              <h6>Popular Groups</h6>
-              <div className='card-main mt-4'>
-                <div className='group-card-row'>
-                  <div className='group-card-left'>
-                    <img
-                        src={Group2}
-                        className='group-img'
-                        alt='Group'
-                      />
-                  </div>
-                  <div className='group-card-right'>
-                    <h5 className='font-weight-500'>Group Name (Official or Unofficial)</h5>
-                    <div className='flex-align3 g2 pt-1 pb-3'>
-                      <span>234234 Members</span>
-                      <span>Active  an 02 hours ago</span>
-                    </div>
-                    <p >amet, Cras nisi at Nullam elit. tincidunt hendrerit at, Ut vitae Donec viverra elit ullamcorper libero, vitae ex. ipsum facilisis odio Donec Lorem ex Donec In amet, Cras nisi at Nullam elit. tincidunt hendrerit at, Ut vitae Donec viverra elit ullamcorper libero, vitae ex. ipsum facilisis odio Donec Lorem ex Donec In </p>
-                  </div>
-                </div>
-              </div>
-              <div className='card-main mt-4'>
-                <div className='group-card-row'>
-                  <div className='group-card-left'>
-                    <img
-                        src={Group2}
-                        className='group-img'
-                        alt='Group'
-                      />
-                  </div>
-                  <div className='group-card-right'>
-                    <h5 className='font-weight-500'>Group Name (Official or Unofficial)</h5>
-                    <div className='flex-align3 g2 pt-1 pb-3'>
-                      <span>234234 Members</span>
-                      <span>Active  an 02 hours ago</span>
-                    </div>
-                    <p >amet, Cras nisi at Nullam elit. tincidunt hendrerit at, Ut vitae Donec viverra elit ullamcorper libero, vitae ex. ipsum facilisis odio Donec Lorem ex Donec In amet, Cras nisi at Nullam elit. tincidunt hendrerit at, Ut vitae Donec viverra elit ullamcorper libero, vitae ex. ipsum facilisis odio Donec Lorem ex Donec In </p>
-                  </div>
-                </div>
-              </div>
-              <div className='card-main mt-4'>
-                <div className='group-card-row'>
-                  <div className='group-card-left'>
-                    <img
-                        src={Group2}
-                        className='group-img'
-                        alt='Group'
-                      />
-                  </div>
-                  <div className='group-card-right'>
-                    <h5 className='font-weight-500'>Group Name (Official or Unofficial)</h5>
-                    <div className='flex-align3 g2 pt-1 pb-3'>
-                      <span>234234 Members</span>
-                      <span>Active  an 02 hours ago</span>
-                    </div>
-                    <p >amet, Cras nisi at Nullam elit. tincidunt hendrerit at, Ut vitae Donec viverra elit ullamcorper libero, vitae ex. ipsum facilisis odio Donec Lorem ex Donec In amet, Cras nisi at Nullam elit. tincidunt hendrerit at, Ut vitae Donec viverra elit ullamcorper libero, vitae ex. ipsum facilisis odio Donec Lorem ex Donec In </p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
           <div className='col-400'>
@@ -168,33 +191,11 @@ const Group = () => {
                   Search
                 </div>
               </div>
-              <div className='badge-container mt-1'>
-                <div className='secondary-badge'>Tag1</div>
-                <div className='secondary-badge'>Tag2</div>
-                <div className='secondary-badge'>Tag3</div>
-                <div className='secondary-badge'>Tag4</div>
-                <div className='secondary-badge'>Tag5</div>
-                <div className='secondary-badge'>Tag6</div>
-                <div className='secondary-badge'>Tag7</div>
-                <div className='secondary-badge'>Tag7</div>
-                <div className='secondary-badge'>Tag9</div>
-                <div className='secondary-badge'>Tag1</div>
-                <div className='secondary-badge'>Tag2</div>
-                <div className='secondary-badge'>Tag3</div>
-                <div className='secondary-badge'>Tag4</div>
-                <div className='secondary-badge'>Tag5</div>
-                <div className='secondary-badge'>Tag6</div>
-                <div className='secondary-badge'>Tag7</div>
-                <div className='secondary-badge'>Tag7</div>
-                <div className='secondary-badge'>Tag9</div>
-                <div className='secondary-badge'>Tag7</div>
-                <div className='secondary-badge'>Tag9</div>
-              </div>
             </div>
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

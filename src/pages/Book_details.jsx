@@ -18,6 +18,8 @@ import Sug1 from '../assets/sug1.png';
 import { jwtDecode } from 'jwt-decode';
 import axiosInstance from '../services/axiosInterceptor';
 import Spinner from '../components/Spinner';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Book_details = () => {
@@ -29,19 +31,32 @@ const Book_details = () => {
   const [averageRating, setAverageRating] = useState(null);
   const [usersCount, setUsersCount] = useState(null);
   const [dropdownText, setDropdownText] = useState('Currently Reading');
+  const [reviewText, setReviewText] = useState('');
+  const [reviews, setReviews] = useState([]);
 
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+
+        const response = await axiosInstance.get(`/api/book/getReviews/${slug}/reviews?limit=10`);
+        setReviews(response.data);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    };
+
+    fetchReviews();
+  }, [slug]);
   useEffect(() => {
     const fetchBookBySlug = async () => {
       try {
         const response = await axiosInstance.get(`/api/book/v1/book/${slug}`);
         setBook(response.data.book);
         setRecommendations(response.data.recommendations);
-
       } catch (error) {
         console.error('Error fetching book details:', error);
       }
     };
-
     fetchBookBySlug();
   }, [slug]);
 
@@ -50,16 +65,12 @@ const Book_details = () => {
       const token = localStorage.getItem('accessToken');
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.userId;
-
-      // Send a request to add the book to the user's collection
       const response = await axiosInstance.post('/api/book/add-book-to-user', {
         userId: userId,
-        bookId: book._id // Assuming book._id exists in your book object
+        bookId: book._id
       });
-
       if (response.status === 200 || response.status === 201) {
-        console.log('Book added to collection');
-        // Optionally, you can update the UI to reflect that the book has been added to the user's collection
+        notifyWant()
       } else {
         console.error('Failed to add book to collection');
       }
@@ -69,7 +80,19 @@ const Book_details = () => {
   };
 
 
-  const handleRatingChange = async (value) => {
+  const handleInputChange = (event) => {
+    setReviewText(event.target.value);
+  };
+
+  const notify = (text) => {
+    toast.success(text);
+  };
+  const notifyWant  = () => {
+    toast.success("Added To Your Collection");
+  };
+
+
+  const handleRatingChange = async () => {
     try {
       const token = localStorage.getItem('accessToken');
       const decodedToken = jwtDecode(token);
@@ -77,18 +100,17 @@ const Book_details = () => {
 
       const response = await axiosInstance.post(`/api/book/book/${slug}/review`, {
         userId: userId,
-        rating: value,
-        reviewText: ''
+        rating: rating,
+        reviewText: reviewText
       });
-
-      if (response.status === 201 || response.status === 200) { // Check for both 201 (Created) and 200 (OK) statuses
-        setRating(value);
-        console.log('Rating updated successfully');
+      if (response.status === 201 || response.status === 200) {
+        setRating(rating);
+        notify("Review updated successfully");
       } else {
-        console.error('Failed to update rating');
+        console.error('Failed to update rating and review');
       }
     } catch (error) {
-      console.error('Error updating rating:', error);
+      console.error('Error updating rating and review:', error);
     }
   };
 
@@ -106,14 +128,13 @@ const Book_details = () => {
       }
     };
 
-    fetchRating(); // Call the fetchRating function
+    fetchRating();
   }, [slug]);
 
 
   useEffect(() => {
     const fetchAverageRating = async () => {
       try {
-        // Fetch the average rating for the book
         const response = await axiosInstance.get(`/api/book/books/${slug}/average-rating`);
         setAverageRating(response.data.averageRating);
         setUsersCount(response.data.usersCount);
@@ -122,7 +143,7 @@ const Book_details = () => {
       }
     };
 
-    fetchAverageRating(); // Call the function to fetch average rating
+    fetchAverageRating();
   }, [slug]); //
 
   const [isReviewModalOpen, setReviewModalOpen] = useState(false);
@@ -156,11 +177,11 @@ const Book_details = () => {
       setDropdownText(response.data.message);
     } catch (error) {
       console.error(error);
-      // Handle error if necessary
     }
   };
   return (
     <>
+    <ToastContainer />
       <Header />
       <div className='main book-details'>
         <div className='search'>
@@ -446,48 +467,51 @@ const Book_details = () => {
 
               </div>
 
+              {reviews.map((review, index) => (
+                <div className='author-card pt-4 mb-4'>
+                  <div className='review-card-left d-flex g2'>
+                    <div className='text-center'>
+                      <div className='flex-align2 g4 mb-2'>
+                        <img src={User2} className="w-100-px" alt="user" />
+                        <div className='text-left'>
+                          <h5 className='font-weight-500 mb-1'>{review.userName}</h5>
+                          <p className='text-gray'>0,000 Reviews</p>
+                          <p className='text-gray'>102 Followers</p>
+                        </div>
+                      </div>
+                      <div className='Stars' style={{ '--rating': review.rating }}></div>
+                      <button button className='btn mt-2' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', borderRadius: '40px' }}>
+                        Follow
+                      </button>
+                    </div>
+
+                  </div>
+                  <div className='review-card-right'>
+                    <div className='autor-card-head'>
+                      <div>
+                        <h6 className='text-gray font-weight-500 pb-4'>Month DD, YYYY</h6>
+                        <h6 className='font-weight-400 mb-2'>{review.reviewText}</h6>
+                       
+
+                        <div className='flex-align3 g4 pt-1'>
+                          <h6 className='font-weight-400 text-gray'>54 Likes</h6>
+                          <h6 className='font-weight-400 flex-align3 g1'>
+                            <img src={Like} className="arrow-down" alt="arrow-down" />
+                            Like
+                          </h6>
+                          <h6 className='font-weight-400 flex-align3 g1'>
+                            <img src={Comment_icon} className="arrow-down" alt="arrow-down" />
+                            Comment
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
               {/* This is comment place */}
-              <div className='author-card pt-4 mb-4'>
-                <div className='review-card-left d-flex g2'>
-                  <div className='text-center'>
-                    <div className='flex-align2 g4 mb-2'>
-                      <img src={User2} className="w-100-px" alt="user" />
-                      <div className='text-left'>
-                        <h5 className='font-weight-500 mb-1'>User Name</h5>
-                        <p className='text-gray'>0,000 Reviews</p>
-                        <p className='text-gray'>102 Followers</p>
-                      </div>
-                    </div>
-                    <div className='Stars' style={{ '--rating': 4 }}></div>
-                    <button button className='btn mt-2' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', borderRadius: '40px' }}>
-                      Follow
-                    </button>
-                  </div>
 
-                </div>
-                <div className='review-card-right'>
-                  <div className='autor-card-head'>
-                    <div>
-                      <h6 className='text-gray font-weight-500 pb-4'>Month DD, YYYY</h6>
-                      <h6 className='font-weight-400 mb-2'>ipsum ex sapien Lorem varius libero, placerat Cras nec dui Donec In ex felis, volutpat sit amet, varius tincidunt non tortor. elit. Morbi turpis venenatis dui </h6>
-                      <h6 className='font-weight-400 mb-2'>Ut commodo elit adipiscing hendrerit non non elementum id id cursus non odio vel tincidunt quam at, ac sit Nam at, malesuada non placerat Nunc urna ex. eget </h6>
-                      <h6 className='font-weight-400 mb-2'>Nullam tincidunt lorem. ipsum Donec fringilla Vestibulum sit consectetur Nam dui. hendrerit vitae turpis lorem. Quisque placerat ex. Cras massa ex ex nisl. ex </h6>
-
-                      <div className='flex-align3 g4 pt-1'>
-                        <h6 className='font-weight-400 text-gray'>54 Likes</h6>
-                        <h6 className='font-weight-400 flex-align3 g1'>
-                          <img src={Like} className="arrow-down" alt="arrow-down" />
-                          Like
-                        </h6>
-                        <h6 className='font-weight-400 flex-align3 g1'>
-                          <img src={Comment_icon} className="arrow-down" alt="arrow-down" />
-                          Comment
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div className='w-100 pt-4'>
                 <button button className='btn mx-auto' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300', borderRadius: '40px' }}>
                   More reviews & ratings
@@ -566,9 +590,13 @@ const Book_details = () => {
             <div className='flex-align2 g3' >
               <div className='contact-form'>
                 <h6 className='pb-1 d-flex font-weight-500'>Reviews </h6>
-                <textarea placeholder='Write your review about this book' ></textarea>
+                <textarea
+                  placeholder="Write your review about this book"
+                  value={reviewText}
+                  onChange={handleInputChange}
+                ></textarea>
               </div>
-              <button button className='btn' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300' }}>Publish review</button>
+              <button onClick={handleRatingChange} className='btn' style={{ boxShadow: 'none', background: 'var(--secondary)', color: 'var(--white)', fontWeight: '300' }}>Publish review</button>
             </div>
 
 

@@ -33,7 +33,7 @@ const Header = () => {
             <div className='dropdown'>
               <a className='dropdown-header'>Community</a>
               <div className='dropdown-options'>
-                <NavLink exact="true" to="/book-review/Group"  className='option' onClick={closeSidebar}>Group</NavLink>
+                <NavLink exact="true" to="/book-review/group"  className='option' onClick={closeSidebar}>Virtual Book club</NavLink>
                 <NavLink exact="true" to="/book-review/Quates"  className='option' onClick={closeSidebar}>Quotes</NavLink>
                 <NavLink exact="true" to="/book-review/Author"  className='option' onClick={closeSidebar}>Ask the Author</NavLink>
                 <NavLink exact="true" to="/book-review/People"  className='option' onClick={closeSidebar}>People</NavLink>
@@ -46,7 +46,7 @@ const Header = () => {
             <div  className='header_buttons'>
               {/* <NavLink to="/book-review/login" className='btn' activeClassName="active">Login</NavLink>
               <button className='btn sign_btn'>Sign up</button>  */}
-              <NavLink to="/book-review/Profile">
+              <NavLink onClick={closeSidebar} to="/book-review/Profile">
                 <img src={User1} className="profile-icon" alt="profile-icon" />
               </NavLink>
             </div>

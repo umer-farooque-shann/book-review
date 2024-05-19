@@ -1,15 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import Header from '../components/Header';
 import Plus from '../assets/plus-circle.png';
 import User1 from '../assets/user1.png';
 import Footer from '../components/Footer';
+import axiosInstance from '../services/axiosInterceptor';
 
 const People = () => {
   const [activeTab, setActiveTab] = useState('week');
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState('');
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
+
+  useEffect(() => {
+    const fetchPeople = async () => {
+      try {
+        const response = await axiosInstance.get('/api/getUsersWithSimilarGenres');
+        setUsers(response.data);
+     
+      } catch (error) {
+        setError(error.response ? error.response.data.message : 'An error occurred');
+      }
+    };
+
+    fetchPeople();
+  }, []);
+
+
+
+  const followUser = async (userId) => {
+    try {
+      const response = await axiosInstance.post('/api/followUser', { followUserId: userId });
+      console.log(response.data.message); // Log success message
+      // Now you can update the UI to reflect the follow action
+      setUsers(users.map(user => user._id === userId ? { ...user, isFollowed: true } : user));
+    } catch (error) {
+      console.error('Error following user:', error);
+      // Handle error, such as displaying an error message to the user
+    }
+  };
+
+  const unfollowUser = async (userId) => {
+    try {
+      const response = await axiosInstance.post('/api/unfollowUser', { unfollowUserId: userId });
+      console.log(response.data.message); // Log success message
+      // Now you can update the UI to reflect the unfollow action
+      setUsers(users.map(user => user._id === userId ? { ...user, isFollowed: false } : user));
+    } catch (error) {
+      console.error('Error unfollowing user:', error);
+      // Handle error, such as displaying an error message to the user
+    }
+  };
+
 
   return (
     <>
@@ -50,7 +94,11 @@ const People = () => {
             </div>
             <div className='tab-content' style={{ display: activeTab === 'week' ? 'block' : 'none' }}>
               <div className='col-2-row'>
+              {users.length > 0 ? (
+                    users.map((user) => (
                 <div className='col-6-cr'>
+
+                
                   <div className='card-main'>
                     <div className='group-card-row'>
                       <div className='group-card-left'>
@@ -62,211 +110,50 @@ const People = () => {
                       </div>
                       <div className='group-card-right flex-align'>
                         <div>
-                          <h5 className='font-weight-600'>Name</h5>
-                          <h6 className='pt-1 font-weight-500 text-gray'>Location (city, state)</h6>
+                          <h5 className='font-weight-600'>{user.name}</h5>
+                          <h6 className='pt-1 font-weight-500 text-gray'>{user.dateOfJoined}</h6>
                           <div className='flex-align3 g2 pt-1'>
-                            <span className='text-secondary font-weight-500'>1,342  Books, </span>
-                            <span className='text-secondary font-weight-500'>2345 Friends</span>
+                            <span className='text-secondary font-weight-500'> </span>
+                            <span className='text-secondary font-weight-500'>{user.followers?.length || 0} Friends</span>
                           </div>
                         </div>
                         <div className='fit-content'>
-                          <button
-                            className='btn bottom-shadow'
-                            style={{
-                              background: 'var(--secondary)',
-                              color: 'var(--white)',
-                              fontWeight: '300'
-                            }}
-                          >
-                            Follow
-                          </button>
+                        {user.isFollowed ? (
+                            <button
+                              className='btn bottom-shadow'
+                              style={{
+                                background: 'var(--secondary)',
+                                color: 'var(--white)',
+                                fontWeight: '300'
+                              }}
+                              onClick={() => unfollowUser(user._id)}
+                            >
+                              Unfollow
+                            </button>
+                          ) : (
+                            <button
+                              className='btn bottom-shadow'
+                              style={{
+                                background: 'var(--secondary)',
+                                color: 'var(--white)',
+                                fontWeight: '300'
+                              }}
+                              onClick={() => followUser(user._id)}
+                            >
+                              Follow
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
                   </div>
+                 
 
                 </div>
-                <div className='col-6-cr'>
-                  <div className='card-main'>
-                    <div className='group-card-row'>
-                      <div className='group-card-left'>
-                        <img
-                          src={User1}
-                          className='group-img'
-                          alt='Group'
-                        />
-                      </div>
-                      <div className='group-card-right flex-align'>
-                        <div>
-                          <h5 className='font-weight-600'>Name</h5>
-                          <h6 className='pt-1 font-weight-500 text-gray'>Location (city, state)</h6>
-                          <div className='flex-align3 g2 pt-1'>
-                            <span className='text-secondary font-weight-500'>1,342  Books, </span>
-                            <span className='text-secondary font-weight-500'>2345 Friends</span>
-                          </div>
-                        </div>
-                        <div className='fit-content'>
-                          <button
-                            className='btn bottom-shadow'
-                            style={{
-                              background: 'var(--secondary)',
-                              color: 'var(--white)',
-                              fontWeight: '300'
-                            }}
-                          >
-                            Follow
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                <div className='col-6-cr'>
-                  <div className='card-main'>
-                    <div className='group-card-row'>
-                      <div className='group-card-left'>
-                        <img
-                          src={User1}
-                          className='group-img'
-                          alt='Group'
-                        />
-                      </div>
-                      <div className='group-card-right flex-align'>
-                        <div>
-                          <h5 className='font-weight-600'>Name</h5>
-                          <h6 className='pt-1 font-weight-500 text-gray'>Location (city, state)</h6>
-                          <div className='flex-align3 g2 pt-1'>
-                            <span className='text-secondary font-weight-500'>1,342  Books, </span>
-                            <span className='text-secondary font-weight-500'>2345 Friends</span>
-                          </div>
-                        </div>
-                        <div className='fit-content'>
-                          <button
-                            className='btn bottom-shadow'
-                            style={{
-                              background: 'var(--secondary)',
-                              color: 'var(--white)',
-                              fontWeight: '300'
-                            }}
-                          >
-                            Follow
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                <div className='col-6-cr'>
-                  <div className='card-main'>
-                    <div className='group-card-row'>
-                      <div className='group-card-left'>
-                        <img
-                          src={User1}
-                          className='group-img'
-                          alt='Group'
-                        />
-                      </div>
-                      <div className='group-card-right flex-align'>
-                        <div>
-                          <h5 className='font-weight-600'>Name</h5>
-                          <h6 className='pt-1 font-weight-500 text-gray'>Location (city, state)</h6>
-                          <div className='flex-align3 g2 pt-1'>
-                            <span className='text-secondary font-weight-500'>1,342  Books, </span>
-                            <span className='text-secondary font-weight-500'>2345 Friends</span>
-                          </div>
-                        </div>
-                        <div className='fit-content'>
-                          <button
-                            className='btn bottom-shadow'
-                            style={{
-                              background: 'var(--secondary)',
-                              color: 'var(--white)',
-                              fontWeight: '300'
-                            }}
-                          >
-                            Follow
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                <div className='col-6-cr'>
-                  <div className='card-main'>
-                    <div className='group-card-row'>
-                      <div className='group-card-left'>
-                        <img
-                          src={User1}
-                          className='group-img'
-                          alt='Group'
-                        />
-                      </div>
-                      <div className='group-card-right flex-align'>
-                        <div>
-                          <h5 className='font-weight-600'>Name</h5>
-                          <h6 className='pt-1 font-weight-500 text-gray'>Location (city, state)</h6>
-                          <div className='flex-align3 g2 pt-1'>
-                            <span className='text-secondary font-weight-500'>1,342  Books, </span>
-                            <span className='text-secondary font-weight-500'>2345 Friends</span>
-                          </div>
-                        </div>
-                        <div className='fit-content'>
-                          <button
-                            className='btn bottom-shadow'
-                            style={{
-                              background: 'var(--secondary)',
-                              color: 'var(--white)',
-                              fontWeight: '300'
-                            }}
-                          >
-                            Follow
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                <div className='col-6-cr'>
-                  <div className='card-main'>
-                    <div className='group-card-row'>
-                      <div className='group-card-left'>
-                        <img
-                          src={User1}
-                          className='group-img'
-                          alt='Group'
-                        />
-                      </div>
-                      <div className='group-card-right flex-align'>
-                        <div>
-                          <h5 className='font-weight-600'>Name</h5>
-                          <h6 className='pt-1 font-weight-500 text-gray'>Location (city, state)</h6>
-                          <div className='flex-align3 g2 pt-1'>
-                            <span className='text-secondary font-weight-500'>1,342  Books, </span>
-                            <span className='text-secondary font-weight-500'>2345 Friends</span>
-                          </div>
-                        </div>
-                        <div className='fit-content'>
-                          <button
-                            className='btn bottom-shadow'
-                            style={{
-                              background: 'var(--secondary)',
-                              color: 'var(--white)',
-                              fontWeight: '300'
-                            }}
-                          >
-                            Follow
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
+                   ))
+                  ) : (
+                    <p>No users found with similar genres.</p>
+                  )}
               </div>
               
             </div>

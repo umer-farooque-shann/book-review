@@ -23,12 +23,12 @@ const Admin = () => {
       try {
         const response = await axiosInstance.get('/api/book/getAllRequests');
         setRequests(response.data);
-        
-     
+        console.log(response.data);
+
       } catch (error) {
         console.error(error);
         setError('Failed to fetch requests');
-     
+
       }
     };
 
@@ -91,7 +91,7 @@ const Admin = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      console.log(response.data);
+      alert("Book Added Successfully")
     } catch (error) {
       console.error(error);
       setError('Failed to add book');
@@ -119,13 +119,13 @@ const Admin = () => {
     <div>
       <AdminNav />
 
-      <div style={{ display: "flex", justifyContent: "center", gap: '20px', alignItems: "center" }}>
+      <div className='adm-main'>
 
         <div>
           <h2 style={{ paddingTop: "100px" }} className='book-new'>Add New Books</h2>
           {error && <p>{error}</p>}
           <form onSubmit={handleFormSubmit} className='admin-form'>
-            <div style={{ display: "flex", gap: "3rem" }}>
+            <div className='wid-1'>
               <div>
                 <label>Title</label>
                 <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
@@ -223,14 +223,32 @@ const Admin = () => {
       </div>
       <h1 style={{ textAlign: "center" }} className='book-new'>Request From User</h1>
       <div className='admin-req'>
-        {requests.map(req=>(
-            <div className='admin-req-main' key={req._id}>
-          <h1>{req.user.username}</h1>
-          <p>{req.requestDetails}</p>
-          <button style={{ background: "inherit", padding: "5px", borderRadius: '5px' }}>Remove <span style={{ color: 'red' }}><ImCross /></span></button>
-        </div>
+        {requests.map((request, index) => (
+          <div style={{ border: "1px solid #111", padding: '10px',display:"flex" }}>
+
+            <div>
+              <div>
+                <strong>User Name:</strong> {request.user.name}
+              </div>
+              <div>
+                <strong>Request Data:</strong> {request.requestDetails}
+              </div>
+              <div>
+                <strong>Request Date:</strong> {request.user.email}
+              </div>
+              <div>
+                <strong>Request Date:</strong> {new Date(request.createdAt).toLocaleDateString()}
+              </div>
+            </div>
+            <div>
+            <button type="button"   className='rm-btn'><ImCross /></button>
+            </div>
+
+
+          </div>
+
         ))}
-      
+
       </div>
       <div>
         <h1 style={{ textAlign: 'center' }}>Contact from Users</h1>
@@ -248,7 +266,7 @@ const Admin = () => {
                   <span>{contact.address}</span>
                 </div>
                 <p > {contact.message}</p>
-                <button style={{ background: "inherit", padding: "5px", borderRadius: '5px' }}  onClick={() => handleDeleteContact(contact._id)}>Remove <span style={{ color: 'red' }}><ImCross /></span></button>
+                <button style={{ background: "inherit", padding: "5px", borderRadius: '5px' }} onClick={() => handleDeleteContact(contact._id)}>Remove <span style={{ color: 'red' }}><ImCross /></span></button>
               </div>
             </div>
           </div>

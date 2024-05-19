@@ -34,7 +34,8 @@ const AdminNav = () => {
         <NavLink exact="true" to="/book-review/admin" ><img src={Logo} className="logo" alt="logo" /></NavLink>
       </div>
       <div className='header_right'>  
-       <button onClick={logout}>LogOut</button>
+       
+       <button className='log-out-admin' onClick={logout}>LogOut</button>
         
       </div>
       <div className="menu" onClick={toggleSidebar}>

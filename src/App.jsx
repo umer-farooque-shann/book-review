@@ -14,65 +14,48 @@ import Admin from './pages/Admin';
 import Intrest from './pages/Intrest';
 import Signup from './pages/Signup';
 import RequestPage from './pages/RequestPage';
+import Club from './pages/Club';
 import './App.css';
 
+const AdminRoute = ({ element, userRole }) => {
+  return userRole === 'admin' ? (
+    element
+  ) : (
+    <Navigate to="/book-review/" replace />
+  );
+};
+
+const ProtectedRoute = ({ element, userRole }) => {
+  const allowedRoles = ['user', 'admin'];
+  return allowedRoles.includes(userRole) ? (
+    element
+  ) : (
+    <Navigate to="/book-review/" replace />
+  );
+};
+
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isFirstTimeLogin, setIsFirstTimeLogin] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    const firstTimeLogin = localStorage.getItem('isFirstTimeLogin');
-    const admin = localStorage.getItem('isAdmin');
-
-    if (token) {
-      setIsLoggedIn(true);
-    }
-
-    if (firstTimeLogin === 'false') {
-      setIsFirstTimeLogin(false);
-    }
-
-    if (admin === 'true') {
-      setIsAdmin(true);
-    }
-  }, []);
-
-
-
-  // Protected Route Component
-  const PrivateRoute = ({ element, path }) => {
-    return isLoggedIn ? element : <Navigate to="/book-review/home" />;
-  };
-
-  // Interest Route Component
-  const InterestRoute = ({ element, path }) => {
-    return isFirstTimeLogin ? element : <Navigate to="/book-review/" />;
-  };
-
-  // Admin Route Component
-  const AdminRoute = ({ element, path }) => {
-    return isAdmin ? element : <Navigate to="/book-review/admin" />;
-  };
+  const userRole = localStorage.getItem('isAdmin') === 'true' ? 'admin' : 'user'; // or fetch from your auth context/provider
+  console.log(userRole);
 
   return (
     <Router>
       <Routes>
         <Route path='/book-review/signup' element={<Signup />} />
-        <Route path='/book-review/' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path='/book-review/admin' element={<AdminRoute element={<Admin />} />} />
-        <Route path='/book-review/home' element={<PrivateRoute element={<Home />} />} />
-        <Route path='/book-review/my_books' element={<PrivateRoute element={<My_books />} />} />
-        <Route path='/book-review/profile' element={<PrivateRoute element={<Profile setIsLoggedIn={setIsLoggedIn}/>} />} />
-        <Route path='/book-review/book_details/:slug' element={<PrivateRoute element={<Book_details />} />} />
-        <Route path='/book-review/group' element={<PrivateRoute element={<Group />} />} />
-        <Route path='/book-review/quates' element={<PrivateRoute element={<Quates />} />} />
-        <Route path='/book-review/author' element={<PrivateRoute element={<Author />} />} />
-        <Route path='/book-review/people' element={<PrivateRoute element={<People />} />} />
-        <Route path='/book-review/contact_us' element={<PrivateRoute element={<Contact_us />} />} />
-        <Route path='/book-review/intrest' element={<InterestRoute element={<Intrest />} />} />
-        <Route path='/book-review/request' element={<PrivateRoute element={<RequestPage />} />} />
+        <Route path='/book-review/' element={<Login />} />
+        <Route path='/book-review/admin' element={<AdminRoute element={<Admin />} userRole={userRole} />} />
+        <Route path='/book-review/home' element={<ProtectedRoute element={<Home />} userRole={userRole} />} />
+        <Route path='/book-review/my_books' element={<ProtectedRoute element={<My_books />} userRole={userRole} />} />
+        <Route path='/book-review/profile' element={<ProtectedRoute element={<Profile />} userRole={userRole} />} />
+        <Route path='/book-review/book_details/:slug' element={<ProtectedRoute element={<Book_details />} userRole={userRole} />} />
+        <Route path='/book-review/group' element={<ProtectedRoute element={<Group />} userRole={userRole} />} />
+        <Route path='/book-review/quates' element={<ProtectedRoute element={<Quates />} userRole={userRole} />} />
+        <Route path='/book-review/author' element={<ProtectedRoute element={<Author />} userRole={userRole} />} />
+        <Route path='/book-review/people' element={<ProtectedRoute element={<People />} userRole={userRole} />} />
+        <Route path='/book-review/contact_us' element={<ProtectedRoute element={<Contact_us />} userRole={userRole} />} />
+        <Route path='/book-review/intrest' element={<ProtectedRoute element={<Intrest />} userRole={userRole} />} />
+        <Route path='/book-review/request' element={<ProtectedRoute element={<RequestPage />} userRole={userRole} />} />
+        <Route path='/book-review/club/:roomId' element={<ProtectedRoute element={<Club />} userRole={userRole} />} />
       </Routes>
     </Router>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
+
 const Genres = ({ genres, onSubmit }) => {
   const [selectedGenres, setSelectedGenres] = useState([]);
-
 
   const handleGenreSelection = (genre) => {
     setSelectedGenres((prevGenres) => {
@@ -23,12 +23,16 @@ const Genres = ({ genres, onSubmit }) => {
     }
   };
 
+  
+
+
   return (
     <div>
+    
       <form onSubmit={handleSubmit} style={{ width: 'fit-content', margin: '0 auto' }}>
         <div className='genre-form'>
-          {genres.map((genre) => (
-            <div key={genre} className='genre-main'>
+          {genres.map((genre, index) => (
+            <div key={genre} className={`genre-main ${index % 2 === 0 ? 'first-row' : 'second-row'}`}>
               <input
                 type="checkbox"
                 value={genre}
@@ -39,12 +43,10 @@ const Genres = ({ genres, onSubmit }) => {
             </div>
           ))}
         </div>
-        <div style={{display:"flex",justifyContent:"center",alignItems:"center", height:'200px'}}>
-           <button type="submit" className='genre-btn'>Submit</button>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: '200px' }}>
+          <button type="submit" className='genre-btn'>Submit</button>
         </div>
-       
       </form>
-
     </div>
   );
 };

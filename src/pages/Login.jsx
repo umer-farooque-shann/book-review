@@ -9,35 +9,41 @@ import Apple from '../assets/apple.png';
 import Facebook from '../assets/facebook.png';
 import Twitter from '../assets/twitter.png';
 import AuthService from '../services/AuthService';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = () => {
     const [email, setEmail] = useState(''); 
     const [password, setPassword] = useState('');
     const navigate = useNavigate()
+    const notify = () => {
+        toast.error("Invalid Credentials");
+      };
+    
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const data = await AuthService.login(email, password); 
-            setIsLoggedIn(true); // Set user as logged in
+           
             if (data.isAdmin) {
                 navigate("/book-review/admin");
             } else {
                 if (data.isFirstTimeLogin) {
                     navigate("/book-review/Intrest");
                 } else {
-                    navigate("/book-review/home"); // Redirect to home page after login
+                    navigate("/book-review/home"); 
                 }
             }
         } catch (error) {
             console.error('Login failed:', error);
-            alert("Invalid Credntials")
-            // Handle login failure, show error message or perform any other action
+            notify()
         }
     };
 
     return (
         <>
+        <ToastContainer />
             <header>
                 <div className='header_align cr_space'>
                     <div className='header_left'>

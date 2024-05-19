@@ -42,6 +42,7 @@ const Home = () => {
     try {
       const response = await axiosInstance.get(`/api/book/books/search?term=${searchTerm}`);
       setSearchResults(response.data);
+      console.log(response.data)
     } catch (error) {
       console.error(error);
       setError('Error searching books');

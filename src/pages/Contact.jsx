@@ -4,6 +4,8 @@ import Header from '../components/Header';
 import Phone from '../assets/phone.png';
 import Mail from '../assets/mail.png';
 import Footer from '../components/Footer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +16,13 @@ const Contact = () => {
     address: '',
     message: ''
   });
+  const notifySuccess = () => {
+    toast.success("Thank you for Your Response");
+  };
+  const notifyError = () => {
+    toast.error("Please Fill All The Fields");
+  };
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +32,7 @@ const Contact = () => {
     e.preventDefault();
     try {
       await axiosInstance.post('/api/book/contactpost', formData);
-      alert('Thank you for Your Response');
+      notifySuccess()
       // Reset the form
       setFormData({
         fullName: '',
@@ -34,13 +43,15 @@ const Contact = () => {
         message: ''
       });
     } catch (error) {
-      console.error('Error sending message:', error);
-      alert('Failed to send message. Please try again later.');
+      notifyError()
+      // console.error('Error sending message:', error);
+      
     }
   };
 
   return (
     <>
+    <ToastContainer/>
       <Header />
       <div className='main contact-page'>
         <div className='book-row cr_space pb-4'>

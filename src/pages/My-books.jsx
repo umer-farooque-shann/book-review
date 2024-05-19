@@ -3,17 +3,20 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Header from '../components/Header';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Search from '../assets/search.png';
 import Plus from '../assets/plus-circle.png';
 import Sug1 from '../assets/sug1.png';
 import axiosInstance from '../services/axiosInterceptor';
+import { ImCross } from "react-icons/im";
 
 
 const My_books = () => {
-
+  const navigate = useNavigate()
   const [userBooks, setUserBooks] = useState([]);
+  const [books, setBooks] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUserBooks = async () => {
@@ -28,7 +31,15 @@ const My_books = () => {
   
     fetchUserBooks();
   }, []);
-  
+  const handleDelete = async (slug) => {
+    try {
+      await axiosInstance.delete(`/api/book/deleteBook/${slug}`);
+      setBooks(books.filter(book => book.slug !== slug));
+    } catch (error) {
+      console.error('Error deleting book:', error);
+      setError('Failed to delete book');
+    }
+  };
 
   const sliderSettings = {
     dots: false,
@@ -46,6 +57,8 @@ const My_books = () => {
   } else {
     sliderSettings.slidesToShow = 6;
   }
+
+  const home = ()=> navigate("/book-review/home")
 
 
   return (
@@ -121,12 +134,13 @@ const My_books = () => {
               <h6 className='text-secondary'>Added Books</h6>
 
             </div>
-
+            {error && <div>Error: {error}</div>}
             <div className="books-row">
               <Slider {...sliderSettings}>
                 {userBooks.map((book, index) => (
                   <NavLink key={index} to={`/book-review/Book_details/${book.slug}`} className='slide-books'>
                     <img src={`http://localhost:7000/${book.image}`} className="books" alt={book.title} />
+                    <p style={{position:"absolute",top:"0",right:"0" ,color:'#265073'}} onClick={() => handleDelete(book.slug)} ><ImCross/></p>
                   </NavLink>
                 ))}
               </Slider>
@@ -135,7 +149,7 @@ const My_books = () => {
               <div className='slide-books slide-books2'>
                 <div className='add-book-card'>
                   <img src={Sug1} className="books" alt="books" />
-                  <img src={Plus} className="plus-img" alt="search" />
+                  <img onClick={home} src={Plus} className="plus-img" alt="search" />
                 </div>
                 <h6 className='text-center text-secondary' style={{ fontWeight: '500' }}>Add Your Books</h6>
               </div>
